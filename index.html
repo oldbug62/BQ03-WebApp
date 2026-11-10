@@ -1,7 +1,7 @@
-<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>BQ03 Studio 0.2</title><style>
+<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>BQ03 Studio 0.2.1 FIX</title><style>
 :root{font-family:system-ui,Arial,sans-serif;color:#eaf0fd;background:#0c1220}*{box-sizing:border-box}body{margin:0}header{background:#141e31;border-bottom:1px solid #2d3b56;padding:18px max(16px,calc((100vw - 1380px)/2));display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}.brand{font-size:24px;font-weight:800}.muted,.hint{color:#a8b8d2;font-size:12px;line-height:1.6}.hint{margin:9px 0}main{max-width:1380px;padding:18px;margin:auto;display:grid;grid-template-columns:minmax(285px,340px) minmax(400px,1fr) minmax(255px,300px);gap:14px}.panel{background:#172237;border:1px solid #30415f;border-radius:14px;padding:16px;margin-bottom:14px}h2{font-size:15px;margin:0 0 12px}label{display:block;color:#c8d5e8;font-size:12px;margin:10px 0 5px}input,select,textarea{background:#0c1627;border:1px solid #435675;color:white;border-radius:8px;padding:9px;width:100%;font:inherit;font-size:13px}input[type=checkbox]{width:auto}input[type=range]{padding:0}textarea{min-height:65px;resize:vertical}button{cursor:pointer;background:#293b58;border:1px solid #496080;color:white;border-radius:8px;padding:9px 11px;font:inherit;font-size:12px;font-weight:650}button.primary{background:#527cef;border-color:#527cef}button.danger{background:#693142}button:disabled{opacity:.4;cursor:not-allowed}.buttons{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}.buttons>*{flex:1}.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}.three{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.pill{border:1px solid #4b5e79;padding:9px 12px;border-radius:99px;font-size:12px}.good{color:#81e7a1}.editor-area{background:#0c1423;border:1px solid #30435d;padding:20px;min-height:420px;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:auto}.ruler{font-size:12px;color:#a8b8d2;margin:8px}.paper-wrap{box-shadow:0 12px 32px #000a;position:relative;background:#fff;touch-action:none;cursor:crosshair;max-width:100%}#editor{display:block;width:100%;height:100%;touch-action:none}.stats{display:flex;gap:15px;flex-wrap:wrap;font-size:12px;color:#b2c3da;margin:12px 0}.warning{border-left:3px solid #f4b963;background:#393024;padding:10px;font-size:12px;line-height:1.5;margin:10px 0}.switch{display:flex;gap:8px;align-items:center;font-size:12px;margin-top:10px}#log{background:#0b1425;color:#b2e2b7;min-height:90px;max-height:180px;overflow:auto;white-space:pre-wrap;word-break:break-all;padding:12px;font:11px/1.5 monospace;border-radius:8px}.selected{outline:2px solid #81a0ff}.full{width:100%}footer{text-align:center;padding:22px;color:#9babca;font-size:12px}.tiny{font-size:11px}hr{border:0;border-top:1px solid #32425c;margin:14px 0}@media(max-width:1150px){main{grid-template-columns:330px 1fr}.right{grid-column:1/-1}}@media(max-width:730px){main{grid-template-columns:1fr}.right{grid-column:auto}.editor-area{min-height:270px;padding:10px}header{padding:16px}.paper-wrap{max-width:100%}}
 </style></head><body>
-<header><div><div class="brand">▣ BQ03 Studio <span style="color:#8da7ff">0.2 Beta</span></div><div class="muted" data-i18n="subtitle">Etiketteneditor · Direkt per Bluetooth · Keine Cloud</div></div><div style="display:flex;gap:10px;align-items:center"><select id="lang" style="width:auto"><option value="de">Deutsch</option><option value="en">English</option></select><span id="connection" class="pill">● Nicht verbunden</span></div></header>
+<header><div><div class="brand">▣ BQ03 Studio <span style="color:#8da7ff">0.2.1 FIX</span></div><div class="muted" data-i18n="subtitle">Etiketteneditor · Direkt per Bluetooth · Keine Cloud</div></div><div style="display:flex;gap:10px;align-items:center"><select id="lang" style="width:auto"><option value="de">Deutsch</option><option value="en">English</option></select><span id="connection" class="pill">● Nicht verbunden</span></div></header>
 <main><section>
 <div class="panel"><h2 data-i18n="connectionTitle">01 · Druckerverbindung</h2><div class="buttons"><button id="connect" class="primary" data-i18n="connect">Bluetooth verbinden</button><button id="disconnect" data-i18n="disconnect">Trennen</button></div><div class="buttons"><button id="status" data-i18n="status">Status abfragen</button><button id="align" data-i18n="position">Etikett positionieren</button></div><p class="hint">BQ03 · BLE AE30 / AE01 / AE02 · Chrome/Edge · HTTPS</p></div>
 <div class="panel"><h2 data-i18n="paperTitle">02 · Papierformat</h2><label data-i18n="format">Etikettenformat</label><select id="preset"><option value="40x20">40 × 20 mm ✓</option><option value="50x50">50 × 50 mm</option><option value="30x15">30 × 15 mm</option><option value="25x25">25 × 25 mm</option><option value="20x10">20 × 10 mm</option><option value="custom" data-i18n="custom">Benutzerdefiniert</option></select><div class="two"><div><label data-i18n="width">Breite (mm)</label><input type="number" id="widthmm" value="40" min="10" max="50" step="0.5"></div><div><label data-i18n="height">Höhe (mm)</label><input type="number" id="heightmm" value="20" min="5" max="70" step="0.5"></div></div><div class="two"><div><label data-i18n="offsetX">Druckversatz X (Punkte)</label><input type="number" id="offsetX" value="0" min="-40" max="40"></div><div><label data-i18n="offsetY">Druckversatz Y (Punkte)</label><input type="number" id="offsetY" value="0" min="-40" max="40"></div></div><p id="formatNote" class="hint"></p></div>
@@ -11,4 +11,1362 @@
 <div class="panel"><h2 data-i18n="preview">Etiketteneditor · maßstabsgetreues Seitenverhältnis</h2><div class="editor-area"><div class="ruler" id="labelMeasurements">40 × 20 mm</div><div class="paper-wrap" id="paperWrap"><canvas id="editor" aria-label="Etiketteneditor"></canvas></div><div class="ruler" data-i18n="previewHint">Die Vorschau zeigt die korrekten Proportionen, nicht die physische Originalgröße am Bildschirm.</div></div><div class="stats"><span id="pixels">–</span><span id="bytes">–</span><span id="duration">–</span></div><div class="buttons"><button id="download" data-i18n="png">PNG herunterladen</button><button id="removeAll" data-i18n="clearAll">Alle Elemente löschen</button></div><label data-i18n="threshold">Schwarzweiß-Schwelle: <span id="thresholdVal">128</span></label><input id="threshold" type="range" min="30" max="230" value="128"><div class="warning" id="printingWarning"></div></div>
 <div class="panel"><h2 data-i18n="printTitle">05 · Drucken</h2><label class="switch"><input id="ack" type="checkbox"><span data-i18n="ack">Ich bestätige den echten Druck mit eingelegtem Papier.</span></label><div class="buttons"><button id="print" class="primary" data-i18n="print">Ein Etikett drucken</button><button id="stop" class="danger" data-i18n="stop">Druck stoppen</button></div><p class="hint" data-i18n="printHint">Einzelauftrag, identisches Bluetooth-Protokoll zur erfolgreichen Beta 0.1.</p></div>
 </section><section class="right"><div class="panel"><h2 data-i18n="properties">Element-Eigenschaften</h2><p id="noSelection" class="hint" data-i18n="selectHint">Text, Bild, QR-Code oder Barcode auswählen.</p><div id="propertiesForm" hidden><label data-i18n="content">Inhalt</label><textarea id="elementText"></textarea><div class="two"><div><label data-i18n="font">Schriftart</label><select id="fontFamily"><option value="Arial">Arial</option><option value="Verdana">Verdana</option><option value="Georgia">Georgia</option><option value="Tahoma">Tahoma</option><option value="Courier New">Courier New</option><option value="Times New Roman">Times New Roman</option></select></div><div><label data-i18n="fontSize">Schriftgröße (px)</label><input id="fontSize" type="number" min="7" max="140"></div></div><label data-i18n="alignment">Textausrichtung</label><select id="textAlign"><option value="left" data-i18n="left">Linksbündig</option><option value="center" data-i18n="center">Zentriert</option><option value="right" data-i18n="right">Rechtsbündig</option></select><div class="two"><div><label>X (mm)</label><input id="elementX" type="number" step="0.5"></div><div><label>Y (mm)</label><input id="elementY" type="number" step="0.5"></div><div><label data-i18n="elWidth">Breite (mm)</label><input id="elementW" type="number" min="1" step="0.5"></div><div><label data-i18n="elHeight">Höhe (mm)</label><input id="elementH" type="number" min="1" step="0.5"></div><div><label data-i18n="rotation">Drehung (°)</label><input id="elementRotation" type="number" min="-360" max="360" step="5"></div><div><label data-i18n="scale">Skalierung (%)</label><input id="elementScale" type="number" min="10" max="300" step="5"></div></div><div class="buttons"><button id="duplicate" data-i18n="duplicate">Duplizieren</button><button id="deleteElement" class="danger" data-i18n="remove">Entfernen</button></div><p class="hint" data-i18n="rotationHint">Position, Größe und Drehung sind relativ zur Etikettenfläche.</p></div></div><div class="panel"><h2 data-i18n="logs">Bluetooth-Protokoll</h2><div id="log" role="log">Bereit.</div><div class="buttons"><button id="clearLog" data-i18n="clearLog">Leeren</button><button id="saveLog" data-i18n="saveLog">Log speichern</button></div></div></section>
-</main><footer data-i18n="footer">BQ03 Studio · Nur lokal im Browser · Keine Druckdaten an fremde Server</footer><script type="module" src="./app.mjs"></script></body></html>
+</main><footer data-i18n="footer">BQ03 Studio · Nur lokal im Browser · Keine Druckdaten an fremde Server</footer><script>
+window.addEventListener('error', function(e) {const log=document.getElementById('log');if(log) log.textContent+='\nJavascript-Fehler: '+e.message+' (Zeile '+e.lineno+')';});
+</script>
+<script>// QRCode for JavaScript by Kazuhiko Arase, MIT license.
+const modules = {};
+function load(name){return modules[name];}
+modules['QRMode'] = (()=>{
+return  {
+    MODE_NUMBER :       1 << 0,
+    MODE_ALPHA_NUM :    1 << 1,
+    MODE_8BIT_BYTE :    1 << 2,
+    MODE_KANJI :        1 << 3
+};
+
+})();
+modules['QR8bitByte'] = (()=>{
+var QRMode = load('QRMode');
+
+function QR8bitByte(data) {
+	this.mode = QRMode.MODE_8BIT_BYTE;
+	this.data = data;
+}
+
+QR8bitByte.prototype = {
+
+	getLength : function() {
+		return this.data.length;
+	},
+	
+	write : function(buffer) {
+		for (var i = 0; i < this.data.length; i++) {
+			// not JIS ...
+			buffer.put(this.data.charCodeAt(i), 8);
+		}
+	}
+};
+
+return  QR8bitByte;
+
+})();
+modules['QRBitBuffer'] = (()=>{
+function QRBitBuffer() {
+	this.buffer = [];
+	this.length = 0;
+}
+
+QRBitBuffer.prototype = {
+
+	get : function(index) {
+		var bufIndex = Math.floor(index / 8);
+		return ( (this.buffer[bufIndex] >>> (7 - index % 8) ) & 1) == 1;
+	},
+	
+	put : function(num, length) {
+		for (var i = 0; i < length; i++) {
+			this.putBit( ( (num >>> (length - i - 1) ) & 1) == 1);
+		}
+	},
+	
+	getLengthInBits : function() {
+		return this.length;
+	},
+	
+	putBit : function(bit) {
+	
+		var bufIndex = Math.floor(this.length / 8);
+		if (this.buffer.length <= bufIndex) {
+			this.buffer.push(0);
+		}
+	
+		if (bit) {
+			this.buffer[bufIndex] |= (0x80 >>> (this.length % 8) );
+		}
+	
+		this.length++;
+	}
+};
+
+return  QRBitBuffer;
+
+})();
+modules['QRErrorCorrectLevel'] = (()=>{
+return  {
+	L : 1,
+	M : 0,
+	Q : 3,
+	H : 2
+};
+
+
+})();
+modules['QRMaskPattern'] = (()=>{
+return  {
+	PATTERN000 : 0,
+	PATTERN001 : 1,
+	PATTERN010 : 2,
+	PATTERN011 : 3,
+	PATTERN100 : 4,
+	PATTERN101 : 5,
+	PATTERN110 : 6,
+	PATTERN111 : 7
+};
+
+})();
+modules['QRMath'] = (()=>{
+var QRMath = {
+
+	glog : function(n) {
+	
+		if (n < 1) {
+			throw new Error("glog(" + n + ")");
+		}
+		
+		return QRMath.LOG_TABLE[n];
+	},
+	
+	gexp : function(n) {
+	
+		while (n < 0) {
+			n += 255;
+		}
+	
+		while (n >= 256) {
+			n -= 255;
+		}
+	
+		return QRMath.EXP_TABLE[n];
+	},
+	
+	EXP_TABLE : new Array(256),
+	
+	LOG_TABLE : new Array(256)
+
+};
+	
+for (var i = 0; i < 8; i++) {
+	QRMath.EXP_TABLE[i] = 1 << i;
+}
+for (var i = 8; i < 256; i++) {
+	QRMath.EXP_TABLE[i] = QRMath.EXP_TABLE[i - 4]
+		^ QRMath.EXP_TABLE[i - 5]
+		^ QRMath.EXP_TABLE[i - 6]
+		^ QRMath.EXP_TABLE[i - 8];
+}
+for (var i = 0; i < 255; i++) {
+	QRMath.LOG_TABLE[QRMath.EXP_TABLE[i] ] = i;
+}
+
+return  QRMath;
+
+})();
+modules['QRPolynomial'] = (()=>{
+var QRMath = load('QRMath');
+
+function QRPolynomial(num, shift) {
+	if (num.length === undefined) {
+		throw new Error(num.length + "/" + shift);
+	}
+
+	var offset = 0;
+
+	while (offset < num.length && num[offset] === 0) {
+		offset++;
+	}
+
+	this.num = new Array(num.length - offset + shift);
+	for (var i = 0; i < num.length - offset; i++) {
+		this.num[i] = num[i + offset];
+	}
+}
+
+QRPolynomial.prototype = {
+
+	get : function(index) {
+		return this.num[index];
+	},
+	
+	getLength : function() {
+		return this.num.length;
+	},
+	
+	multiply : function(e) {
+	
+		var num = new Array(this.getLength() + e.getLength() - 1);
+	
+		for (var i = 0; i < this.getLength(); i++) {
+			for (var j = 0; j < e.getLength(); j++) {
+				num[i + j] ^= QRMath.gexp(QRMath.glog(this.get(i) ) + QRMath.glog(e.get(j) ) );
+			}
+		}
+	
+		return new QRPolynomial(num, 0);
+	},
+	
+	mod : function(e) {
+	
+		if (this.getLength() - e.getLength() < 0) {
+			return this;
+		}
+	
+		var ratio = QRMath.glog(this.get(0) ) - QRMath.glog(e.get(0) );
+	
+		var num = new Array(this.getLength() );
+		
+		for (var i = 0; i < this.getLength(); i++) {
+			num[i] = this.get(i);
+		}
+		
+		for (var x = 0; x < e.getLength(); x++) {
+			num[x] ^= QRMath.gexp(QRMath.glog(e.get(x) ) + ratio);
+		}
+	
+		// recursive call
+		return new QRPolynomial(num, 0).mod(e);
+	}
+};
+
+return  QRPolynomial;
+
+})();
+modules['QRRSBlock'] = (()=>{
+var QRErrorCorrectLevel = load('QRErrorCorrectLevel');
+
+function QRRSBlock(totalCount, dataCount) {
+	this.totalCount = totalCount;
+	this.dataCount  = dataCount;
+}
+
+QRRSBlock.RS_BLOCK_TABLE = [
+
+	// L
+	// M
+	// Q
+	// H
+
+	// 1
+	[1, 26, 19],
+	[1, 26, 16],
+	[1, 26, 13],
+	[1, 26, 9],
+	
+	// 2
+	[1, 44, 34],
+	[1, 44, 28],
+	[1, 44, 22],
+	[1, 44, 16],
+
+	// 3
+	[1, 70, 55],
+	[1, 70, 44],
+	[2, 35, 17],
+	[2, 35, 13],
+
+	// 4		
+	[1, 100, 80],
+	[2, 50, 32],
+	[2, 50, 24],
+	[4, 25, 9],
+	
+	// 5
+	[1, 134, 108],
+	[2, 67, 43],
+	[2, 33, 15, 2, 34, 16],
+	[2, 33, 11, 2, 34, 12],
+	
+	// 6
+	[2, 86, 68],
+	[4, 43, 27],
+	[4, 43, 19],
+	[4, 43, 15],
+	
+	// 7		
+	[2, 98, 78],
+	[4, 49, 31],
+	[2, 32, 14, 4, 33, 15],
+	[4, 39, 13, 1, 40, 14],
+	
+	// 8
+	[2, 121, 97],
+	[2, 60, 38, 2, 61, 39],
+	[4, 40, 18, 2, 41, 19],
+	[4, 40, 14, 2, 41, 15],
+	
+	// 9
+	[2, 146, 116],
+	[3, 58, 36, 2, 59, 37],
+	[4, 36, 16, 4, 37, 17],
+	[4, 36, 12, 4, 37, 13],
+	
+	// 10		
+	[2, 86, 68, 2, 87, 69],
+	[4, 69, 43, 1, 70, 44],
+	[6, 43, 19, 2, 44, 20],
+	[6, 43, 15, 2, 44, 16],
+
+	// 11
+	[4, 101, 81],
+	[1, 80, 50, 4, 81, 51],
+	[4, 50, 22, 4, 51, 23],
+	[3, 36, 12, 8, 37, 13],
+
+	// 12
+	[2, 116, 92, 2, 117, 93],
+	[6, 58, 36, 2, 59, 37],
+	[4, 46, 20, 6, 47, 21],
+	[7, 42, 14, 4, 43, 15],
+
+	// 13
+	[4, 133, 107],
+	[8, 59, 37, 1, 60, 38],
+	[8, 44, 20, 4, 45, 21],
+	[12, 33, 11, 4, 34, 12],
+
+	// 14
+	[3, 145, 115, 1, 146, 116],
+	[4, 64, 40, 5, 65, 41],
+	[11, 36, 16, 5, 37, 17],
+	[11, 36, 12, 5, 37, 13],
+
+	// 15
+	[5, 109, 87, 1, 110, 88],
+	[5, 65, 41, 5, 66, 42],
+	[5, 54, 24, 7, 55, 25],
+	[11, 36, 12],
+
+	// 16
+	[5, 122, 98, 1, 123, 99],
+	[7, 73, 45, 3, 74, 46],
+	[15, 43, 19, 2, 44, 20],
+	[3, 45, 15, 13, 46, 16],
+
+	// 17
+	[1, 135, 107, 5, 136, 108],
+	[10, 74, 46, 1, 75, 47],
+	[1, 50, 22, 15, 51, 23],
+	[2, 42, 14, 17, 43, 15],
+
+	// 18
+	[5, 150, 120, 1, 151, 121],
+	[9, 69, 43, 4, 70, 44],
+	[17, 50, 22, 1, 51, 23],
+	[2, 42, 14, 19, 43, 15],
+
+	// 19
+	[3, 141, 113, 4, 142, 114],
+	[3, 70, 44, 11, 71, 45],
+	[17, 47, 21, 4, 48, 22],
+	[9, 39, 13, 16, 40, 14],
+
+	// 20
+	[3, 135, 107, 5, 136, 108],
+	[3, 67, 41, 13, 68, 42],
+	[15, 54, 24, 5, 55, 25],
+	[15, 43, 15, 10, 44, 16],
+
+	// 21
+	[4, 144, 116, 4, 145, 117],
+	[17, 68, 42],
+	[17, 50, 22, 6, 51, 23],
+	[19, 46, 16, 6, 47, 17],
+
+	// 22
+	[2, 139, 111, 7, 140, 112],
+	[17, 74, 46],
+	[7, 54, 24, 16, 55, 25],
+	[34, 37, 13],
+
+	// 23
+	[4, 151, 121, 5, 152, 122],
+	[4, 75, 47, 14, 76, 48],
+	[11, 54, 24, 14, 55, 25],
+	[16, 45, 15, 14, 46, 16],
+
+	// 24
+	[6, 147, 117, 4, 148, 118],
+	[6, 73, 45, 14, 74, 46],
+	[11, 54, 24, 16, 55, 25],
+	[30, 46, 16, 2, 47, 17],
+
+	// 25
+	[8, 132, 106, 4, 133, 107],
+	[8, 75, 47, 13, 76, 48],
+	[7, 54, 24, 22, 55, 25],
+	[22, 45, 15, 13, 46, 16],
+
+	// 26
+	[10, 142, 114, 2, 143, 115],
+	[19, 74, 46, 4, 75, 47],
+	[28, 50, 22, 6, 51, 23],
+	[33, 46, 16, 4, 47, 17],
+
+	// 27
+	[8, 152, 122, 4, 153, 123],
+	[22, 73, 45, 3, 74, 46],
+	[8, 53, 23, 26, 54, 24],
+	[12, 45, 15, 28, 46, 16],
+
+	// 28
+	[3, 147, 117, 10, 148, 118],
+	[3, 73, 45, 23, 74, 46],
+	[4, 54, 24, 31, 55, 25],
+	[11, 45, 15, 31, 46, 16],
+
+	// 29
+	[7, 146, 116, 7, 147, 117],
+	[21, 73, 45, 7, 74, 46],
+	[1, 53, 23, 37, 54, 24],
+	[19, 45, 15, 26, 46, 16],
+
+	// 30
+	[5, 145, 115, 10, 146, 116],
+	[19, 75, 47, 10, 76, 48],
+	[15, 54, 24, 25, 55, 25],
+	[23, 45, 15, 25, 46, 16],
+
+	// 31
+	[13, 145, 115, 3, 146, 116],
+	[2, 74, 46, 29, 75, 47],
+	[42, 54, 24, 1, 55, 25],
+	[23, 45, 15, 28, 46, 16],
+
+	// 32
+	[17, 145, 115],
+	[10, 74, 46, 23, 75, 47],
+	[10, 54, 24, 35, 55, 25],
+	[19, 45, 15, 35, 46, 16],
+
+	// 33
+	[17, 145, 115, 1, 146, 116],
+	[14, 74, 46, 21, 75, 47],
+	[29, 54, 24, 19, 55, 25],
+	[11, 45, 15, 46, 46, 16],
+
+	// 34
+	[13, 145, 115, 6, 146, 116],
+	[14, 74, 46, 23, 75, 47],
+	[44, 54, 24, 7, 55, 25],
+	[59, 46, 16, 1, 47, 17],
+
+	// 35
+	[12, 151, 121, 7, 152, 122],
+	[12, 75, 47, 26, 76, 48],
+	[39, 54, 24, 14, 55, 25],
+	[22, 45, 15, 41, 46, 16],
+
+	// 36
+	[6, 151, 121, 14, 152, 122],
+	[6, 75, 47, 34, 76, 48],
+	[46, 54, 24, 10, 55, 25],
+	[2, 45, 15, 64, 46, 16],
+
+	// 37
+	[17, 152, 122, 4, 153, 123],
+	[29, 74, 46, 14, 75, 47],
+	[49, 54, 24, 10, 55, 25],
+	[24, 45, 15, 46, 46, 16],
+
+	// 38
+	[4, 152, 122, 18, 153, 123],
+	[13, 74, 46, 32, 75, 47],
+	[48, 54, 24, 14, 55, 25],
+	[42, 45, 15, 32, 46, 16],
+
+	// 39
+	[20, 147, 117, 4, 148, 118],
+	[40, 75, 47, 7, 76, 48],
+	[43, 54, 24, 22, 55, 25],
+	[10, 45, 15, 67, 46, 16],
+
+	// 40
+	[19, 148, 118, 6, 149, 119],
+	[18, 75, 47, 31, 76, 48],
+	[34, 54, 24, 34, 55, 25],
+	[20, 45, 15, 61, 46, 16]
+];
+
+QRRSBlock.getRSBlocks = function(typeNumber, errorCorrectLevel) {
+	
+	var rsBlock = QRRSBlock.getRsBlockTable(typeNumber, errorCorrectLevel);
+	
+	if (rsBlock === undefined) {
+		throw new Error("bad rs block @ typeNumber:" + typeNumber + "/errorCorrectLevel:" + errorCorrectLevel);
+	}
+
+	var length = rsBlock.length / 3;
+	
+	var list = [];
+	
+	for (var i = 0; i < length; i++) {
+
+		var count = rsBlock[i * 3 + 0];
+		var totalCount = rsBlock[i * 3 + 1];
+		var dataCount  = rsBlock[i * 3 + 2];
+
+		for (var j = 0; j < count; j++) {
+			list.push(new QRRSBlock(totalCount, dataCount) );	
+		}
+	}
+	
+	return list;
+};
+
+QRRSBlock.getRsBlockTable = function(typeNumber, errorCorrectLevel) {
+
+	switch(errorCorrectLevel) {
+	case QRErrorCorrectLevel.L :
+		return QRRSBlock.RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 0];
+	case QRErrorCorrectLevel.M :
+		return QRRSBlock.RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 1];
+	case QRErrorCorrectLevel.Q :
+		return QRRSBlock.RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 2];
+	case QRErrorCorrectLevel.H :
+		return QRRSBlock.RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 3];
+	default :
+		return undefined;
+	}
+};
+
+return  QRRSBlock;
+
+})();
+modules['QRUtil'] = (()=>{
+var QRMode = load('QRMode');
+var QRPolynomial = load('QRPolynomial');
+var QRMath = load('QRMath');
+var QRMaskPattern = load('QRMaskPattern');
+
+var QRUtil = {
+
+    PATTERN_POSITION_TABLE : [
+        [],
+        [6, 18],
+        [6, 22],
+        [6, 26],
+        [6, 30],
+        [6, 34],
+        [6, 22, 38],
+        [6, 24, 42],
+        [6, 26, 46],
+        [6, 28, 50],
+        [6, 30, 54],        
+        [6, 32, 58],
+        [6, 34, 62],
+        [6, 26, 46, 66],
+        [6, 26, 48, 70],
+        [6, 26, 50, 74],
+        [6, 30, 54, 78],
+        [6, 30, 56, 82],
+        [6, 30, 58, 86],
+        [6, 34, 62, 90],
+        [6, 28, 50, 72, 94],
+        [6, 26, 50, 74, 98],
+        [6, 30, 54, 78, 102],
+        [6, 28, 54, 80, 106],
+        [6, 32, 58, 84, 110],
+        [6, 30, 58, 86, 114],
+        [6, 34, 62, 90, 118],
+        [6, 26, 50, 74, 98, 122],
+        [6, 30, 54, 78, 102, 126],
+        [6, 26, 52, 78, 104, 130],
+        [6, 30, 56, 82, 108, 134],
+        [6, 34, 60, 86, 112, 138],
+        [6, 30, 58, 86, 114, 142],
+        [6, 34, 62, 90, 118, 146],
+        [6, 30, 54, 78, 102, 126, 150],
+        [6, 24, 50, 76, 102, 128, 154],
+        [6, 28, 54, 80, 106, 132, 158],
+        [6, 32, 58, 84, 110, 136, 162],
+        [6, 26, 54, 82, 110, 138, 166],
+        [6, 30, 58, 86, 114, 142, 170]
+    ],
+
+    G15 : (1 << 10) | (1 << 8) | (1 << 5) | (1 << 4) | (1 << 2) | (1 << 1) | (1 << 0),
+    G18 : (1 << 12) | (1 << 11) | (1 << 10) | (1 << 9) | (1 << 8) | (1 << 5) | (1 << 2) | (1 << 0),
+    G15_MASK : (1 << 14) | (1 << 12) | (1 << 10)    | (1 << 4) | (1 << 1),
+
+    getBCHTypeInfo : function(data) {
+        var d = data << 10;
+        while (QRUtil.getBCHDigit(d) - QRUtil.getBCHDigit(QRUtil.G15) >= 0) {
+            d ^= (QRUtil.G15 << (QRUtil.getBCHDigit(d) - QRUtil.getBCHDigit(QRUtil.G15) ) );    
+        }
+        return ( (data << 10) | d) ^ QRUtil.G15_MASK;
+    },
+
+    getBCHTypeNumber : function(data) {
+        var d = data << 12;
+        while (QRUtil.getBCHDigit(d) - QRUtil.getBCHDigit(QRUtil.G18) >= 0) {
+            d ^= (QRUtil.G18 << (QRUtil.getBCHDigit(d) - QRUtil.getBCHDigit(QRUtil.G18) ) );    
+        }
+        return (data << 12) | d;
+    },
+
+    getBCHDigit : function(data) {
+
+        var digit = 0;
+
+        while (data !== 0) {
+            digit++;
+            data >>>= 1;
+        }
+
+        return digit;
+    },
+
+    getPatternPosition : function(typeNumber) {
+        return QRUtil.PATTERN_POSITION_TABLE[typeNumber - 1];
+    },
+
+    getMask : function(maskPattern, i, j) {
+        
+        switch (maskPattern) {
+            
+        case QRMaskPattern.PATTERN000 : return (i + j) % 2 === 0;
+        case QRMaskPattern.PATTERN001 : return i % 2 === 0;
+        case QRMaskPattern.PATTERN010 : return j % 3 === 0;
+        case QRMaskPattern.PATTERN011 : return (i + j) % 3 === 0;
+        case QRMaskPattern.PATTERN100 : return (Math.floor(i / 2) + Math.floor(j / 3) ) % 2 === 0;
+        case QRMaskPattern.PATTERN101 : return (i * j) % 2 + (i * j) % 3 === 0;
+        case QRMaskPattern.PATTERN110 : return ( (i * j) % 2 + (i * j) % 3) % 2 === 0;
+        case QRMaskPattern.PATTERN111 : return ( (i * j) % 3 + (i + j) % 2) % 2 === 0;
+
+        default :
+            throw new Error("bad maskPattern:" + maskPattern);
+        }
+    },
+
+    getErrorCorrectPolynomial : function(errorCorrectLength) {
+
+        var a = new QRPolynomial([1], 0);
+
+        for (var i = 0; i < errorCorrectLength; i++) {
+            a = a.multiply(new QRPolynomial([1, QRMath.gexp(i)], 0) );
+        }
+
+        return a;
+    },
+
+    getLengthInBits : function(mode, type) {
+
+        if (1 <= type && type < 10) {
+
+            // 1 - 9
+
+            switch(mode) {
+            case QRMode.MODE_NUMBER     : return 10;
+            case QRMode.MODE_ALPHA_NUM  : return 9;
+            case QRMode.MODE_8BIT_BYTE  : return 8;
+            case QRMode.MODE_KANJI      : return 8;
+            default :
+                throw new Error("mode:" + mode);
+            }
+
+        } else if (type < 27) {
+
+            // 10 - 26
+
+            switch(mode) {
+            case QRMode.MODE_NUMBER     : return 12;
+            case QRMode.MODE_ALPHA_NUM  : return 11;
+            case QRMode.MODE_8BIT_BYTE  : return 16;
+            case QRMode.MODE_KANJI      : return 10;
+            default :
+                throw new Error("mode:" + mode);
+            }
+
+        } else if (type < 41) {
+
+            // 27 - 40
+
+            switch(mode) {
+            case QRMode.MODE_NUMBER     : return 14;
+            case QRMode.MODE_ALPHA_NUM  : return 13;
+            case QRMode.MODE_8BIT_BYTE  : return 16;
+            case QRMode.MODE_KANJI      : return 12;
+            default :
+                throw new Error("mode:" + mode);
+            }
+
+        } else {
+            throw new Error("type:" + type);
+        }
+    },
+
+    getLostPoint : function(qrCode) {
+        
+        var moduleCount = qrCode.getModuleCount();
+        var lostPoint = 0;
+        var row = 0; 
+        var col = 0;
+
+        
+        // LEVEL1
+        
+        for (row = 0; row < moduleCount; row++) {
+
+            for (col = 0; col < moduleCount; col++) {
+
+                var sameCount = 0;
+                var dark = qrCode.isDark(row, col);
+
+                for (var r = -1; r <= 1; r++) {
+
+                    if (row + r < 0 || moduleCount <= row + r) {
+                        continue;
+                    }
+
+                    for (var c = -1; c <= 1; c++) {
+
+                        if (col + c < 0 || moduleCount <= col + c) {
+                            continue;
+                        }
+
+                        if (r === 0 && c === 0) {
+                            continue;
+                        }
+
+                        if (dark === qrCode.isDark(row + r, col + c) ) {
+                            sameCount++;
+                        }
+                    }
+                }
+
+                if (sameCount > 5) {
+                    lostPoint += (3 + sameCount - 5);
+                }
+            }
+        }
+
+        // LEVEL2
+
+        for (row = 0; row < moduleCount - 1; row++) {
+            for (col = 0; col < moduleCount - 1; col++) {
+                var count = 0;
+                if (qrCode.isDark(row,     col    ) ) count++;
+                if (qrCode.isDark(row + 1, col    ) ) count++;
+                if (qrCode.isDark(row,     col + 1) ) count++;
+                if (qrCode.isDark(row + 1, col + 1) ) count++;
+                if (count === 0 || count === 4) {
+                    lostPoint += 3;
+                }
+            }
+        }
+
+        // LEVEL3
+
+        for (row = 0; row < moduleCount; row++) {
+            for (col = 0; col < moduleCount - 6; col++) {
+                if (qrCode.isDark(row, col) && 
+                        !qrCode.isDark(row, col + 1) && 
+                         qrCode.isDark(row, col + 2) && 
+                         qrCode.isDark(row, col + 3) && 
+                         qrCode.isDark(row, col + 4) && 
+                        !qrCode.isDark(row, col + 5) && 
+                         qrCode.isDark(row, col + 6) ) {
+                    lostPoint += 40;
+                }
+            }
+        }
+
+        for (col = 0; col < moduleCount; col++) {
+            for (row = 0; row < moduleCount - 6; row++) {
+                if (qrCode.isDark(row, col) &&
+                        !qrCode.isDark(row + 1, col) &&
+                         qrCode.isDark(row + 2, col) &&
+                         qrCode.isDark(row + 3, col) &&
+                         qrCode.isDark(row + 4, col) &&
+                        !qrCode.isDark(row + 5, col) &&
+                         qrCode.isDark(row + 6, col) ) {
+                    lostPoint += 40;
+                }
+            }
+        }
+
+        // LEVEL4
+        
+        var darkCount = 0;
+
+        for (col = 0; col < moduleCount; col++) {
+            for (row = 0; row < moduleCount; row++) {
+                if (qrCode.isDark(row, col) ) {
+                    darkCount++;
+                }
+            }
+        }
+        
+        var ratio = Math.abs(100 * darkCount / moduleCount / moduleCount - 50) / 5;
+        lostPoint += ratio * 10;
+
+        return lostPoint;       
+    }
+
+};
+
+return  QRUtil;
+
+})();
+modules['index'] = (()=>{
+//---------------------------------------------------------------------
+// QRCode for JavaScript
+//
+// Copyright (c) 2009 Kazuhiko Arase
+//
+// URL: http://www.d-project.com/
+//
+// Licensed under the MIT license:
+//   http://www.opensource.org/licenses/mit-license.php
+//
+// The word "QR Code" is registered trademark of 
+// DENSO WAVE INCORPORATED
+//   http://www.denso-wave.com/qrcode/faqpatent-e.html
+//
+//---------------------------------------------------------------------
+// Modified to work in node for this project (and some refactoring)
+//---------------------------------------------------------------------
+
+var QR8bitByte = load('QR8bitByte');
+var QRUtil = load('QRUtil');
+var QRPolynomial = load('QRPolynomial');
+var QRRSBlock = load('QRRSBlock');
+var QRBitBuffer = load('QRBitBuffer');
+
+function QRCode(typeNumber, errorCorrectLevel) {
+	this.typeNumber = typeNumber;
+	this.errorCorrectLevel = errorCorrectLevel;
+	this.modules = null;
+	this.moduleCount = 0;
+	this.dataCache = null;
+	this.dataList = [];
+}
+
+QRCode.prototype = {
+	
+	addData : function(data) {
+		var newData = new QR8bitByte(data);
+		this.dataList.push(newData);
+		this.dataCache = null;
+	},
+	
+	isDark : function(row, col) {
+		if (row < 0 || this.moduleCount <= row || col < 0 || this.moduleCount <= col) {
+			throw new Error(row + "," + col);
+		}
+		return this.modules[row][col];
+	},
+
+	getModuleCount : function() {
+		return this.moduleCount;
+	},
+	
+	make : function() {
+		// Calculate automatically typeNumber if provided is < 1
+		if (this.typeNumber < 1 ){
+			var typeNumber = 1;
+			for (typeNumber = 1; typeNumber < 40; typeNumber++) {
+				var rsBlocks = QRRSBlock.getRSBlocks(typeNumber, this.errorCorrectLevel);
+
+				var buffer = new QRBitBuffer();
+				var totalDataCount = 0;
+				for (var i = 0; i < rsBlocks.length; i++) {
+					totalDataCount += rsBlocks[i].dataCount;
+				}
+
+				for (var x = 0; x < this.dataList.length; x++) {
+					var data = this.dataList[x];
+					buffer.put(data.mode, 4);
+					buffer.put(data.getLength(), QRUtil.getLengthInBits(data.mode, typeNumber) );
+					data.write(buffer);
+				}
+				if (buffer.getLengthInBits() <= totalDataCount * 8)
+					break;
+			}
+			this.typeNumber = typeNumber;
+		}
+		this.makeImpl(false, this.getBestMaskPattern() );
+	},
+	
+	makeImpl : function(test, maskPattern) {
+		
+		this.moduleCount = this.typeNumber * 4 + 17;
+		this.modules = new Array(this.moduleCount);
+		
+		for (var row = 0; row < this.moduleCount; row++) {
+			
+			this.modules[row] = new Array(this.moduleCount);
+			
+			for (var col = 0; col < this.moduleCount; col++) {
+				this.modules[row][col] = null;//(col + row) % 3;
+			}
+		}
+	
+		this.setupPositionProbePattern(0, 0);
+		this.setupPositionProbePattern(this.moduleCount - 7, 0);
+		this.setupPositionProbePattern(0, this.moduleCount - 7);
+		this.setupPositionAdjustPattern();
+		this.setupTimingPattern();
+		this.setupTypeInfo(test, maskPattern);
+		
+		if (this.typeNumber >= 7) {
+			this.setupTypeNumber(test);
+		}
+	
+		if (this.dataCache === null) {
+			this.dataCache = QRCode.createData(this.typeNumber, this.errorCorrectLevel, this.dataList);
+		}
+	
+		this.mapData(this.dataCache, maskPattern);
+	},
+
+	setupPositionProbePattern : function(row, col)  {
+		
+		for (var r = -1; r <= 7; r++) {
+			
+			if (row + r <= -1 || this.moduleCount <= row + r) continue;
+			
+			for (var c = -1; c <= 7; c++) {
+				
+				if (col + c <= -1 || this.moduleCount <= col + c) continue;
+				
+				if ( (0 <= r && r <= 6 && (c === 0 || c === 6) ) || 
+                     (0 <= c && c <= 6 && (r === 0 || r === 6) ) || 
+                     (2 <= r && r <= 4 && 2 <= c && c <= 4) ) {
+					this.modules[row + r][col + c] = true;
+				} else {
+					this.modules[row + r][col + c] = false;
+				}
+			}		
+		}		
+	},
+	
+	getBestMaskPattern : function() {
+	
+		var minLostPoint = 0;
+		var pattern = 0;
+	
+		for (var i = 0; i < 8; i++) {
+			
+			this.makeImpl(true, i);
+	
+			var lostPoint = QRUtil.getLostPoint(this);
+	
+			if (i === 0 || minLostPoint >  lostPoint) {
+				minLostPoint = lostPoint;
+				pattern = i;
+			}
+		}
+	
+		return pattern;
+	},
+	
+	createMovieClip : function(target_mc, instance_name, depth) {
+	
+		var qr_mc = target_mc.createEmptyMovieClip(instance_name, depth);
+		var cs = 1;
+	
+		this.make();
+
+		for (var row = 0; row < this.modules.length; row++) {
+			
+			var y = row * cs;
+			
+			for (var col = 0; col < this.modules[row].length; col++) {
+	
+				var x = col * cs;
+				var dark = this.modules[row][col];
+			
+				if (dark) {
+					qr_mc.beginFill(0, 100);
+					qr_mc.moveTo(x, y);
+					qr_mc.lineTo(x + cs, y);
+					qr_mc.lineTo(x + cs, y + cs);
+					qr_mc.lineTo(x, y + cs);
+					qr_mc.endFill();
+				}
+			}
+		}
+		
+		return qr_mc;
+	},
+
+	setupTimingPattern : function() {
+		
+		for (var r = 8; r < this.moduleCount - 8; r++) {
+			if (this.modules[r][6] !== null) {
+				continue;
+			}
+			this.modules[r][6] = (r % 2 === 0);
+		}
+	
+		for (var c = 8; c < this.moduleCount - 8; c++) {
+			if (this.modules[6][c] !== null) {
+				continue;
+			}
+			this.modules[6][c] = (c % 2 === 0);
+		}
+	},
+	
+	setupPositionAdjustPattern : function() {
+	
+		var pos = QRUtil.getPatternPosition(this.typeNumber);
+		
+		for (var i = 0; i < pos.length; i++) {
+		
+			for (var j = 0; j < pos.length; j++) {
+			
+				var row = pos[i];
+				var col = pos[j];
+				
+				if (this.modules[row][col] !== null) {
+					continue;
+				}
+				
+				for (var r = -2; r <= 2; r++) {
+				
+					for (var c = -2; c <= 2; c++) {
+					
+						if (Math.abs(r) === 2 || 
+                            Math.abs(c) === 2 ||
+                            (r === 0 && c === 0) ) {
+							this.modules[row + r][col + c] = true;
+						} else {
+							this.modules[row + r][col + c] = false;
+						}
+					}
+				}
+			}
+		}
+	},
+	
+	setupTypeNumber : function(test) {
+	
+		var bits = QRUtil.getBCHTypeNumber(this.typeNumber);
+        var mod;
+	
+		for (var i = 0; i < 18; i++) {
+			mod = (!test && ( (bits >> i) & 1) === 1);
+			this.modules[Math.floor(i / 3)][i % 3 + this.moduleCount - 8 - 3] = mod;
+		}
+	
+		for (var x = 0; x < 18; x++) {
+			mod = (!test && ( (bits >> x) & 1) === 1);
+			this.modules[x % 3 + this.moduleCount - 8 - 3][Math.floor(x / 3)] = mod;
+		}
+	},
+	
+	setupTypeInfo : function(test, maskPattern) {
+	
+		var data = (this.errorCorrectLevel << 3) | maskPattern;
+		var bits = QRUtil.getBCHTypeInfo(data);
+        var mod;
+	
+		// vertical		
+		for (var v = 0; v < 15; v++) {
+	
+			mod = (!test && ( (bits >> v) & 1) === 1);
+	
+			if (v < 6) {
+				this.modules[v][8] = mod;
+			} else if (v < 8) {
+				this.modules[v + 1][8] = mod;
+			} else {
+				this.modules[this.moduleCount - 15 + v][8] = mod;
+			}
+		}
+	
+		// horizontal
+		for (var h = 0; h < 15; h++) {
+	
+			mod = (!test && ( (bits >> h) & 1) === 1);
+			
+			if (h < 8) {
+				this.modules[8][this.moduleCount - h - 1] = mod;
+			} else if (h < 9) {
+				this.modules[8][15 - h - 1 + 1] = mod;
+			} else {
+				this.modules[8][15 - h - 1] = mod;
+			}
+		}
+	
+		// fixed module
+		this.modules[this.moduleCount - 8][8] = (!test);
+	
+	},
+	
+	mapData : function(data, maskPattern) {
+		
+		var inc = -1;
+		var row = this.moduleCount - 1;
+		var bitIndex = 7;
+		var byteIndex = 0;
+		
+		for (var col = this.moduleCount - 1; col > 0; col -= 2) {
+	
+			if (col === 6) col--;
+	
+			while (true) {
+	
+				for (var c = 0; c < 2; c++) {
+					
+					if (this.modules[row][col - c] === null) {
+						
+						var dark = false;
+	
+						if (byteIndex < data.length) {
+							dark = ( ( (data[byteIndex] >>> bitIndex) & 1) === 1);
+						}
+	
+						var mask = QRUtil.getMask(maskPattern, row, col - c);
+	
+						if (mask) {
+							dark = !dark;
+						}
+						
+						this.modules[row][col - c] = dark;
+						bitIndex--;
+	
+						if (bitIndex === -1) {
+							byteIndex++;
+							bitIndex = 7;
+						}
+					}
+				}
+								
+				row += inc;
+	
+				if (row < 0 || this.moduleCount <= row) {
+					row -= inc;
+					inc = -inc;
+					break;
+				}
+			}
+		}
+		
+	}
+
+};
+
+QRCode.PAD0 = 0xEC;
+QRCode.PAD1 = 0x11;
+
+QRCode.createData = function(typeNumber, errorCorrectLevel, dataList) {
+	
+	var rsBlocks = QRRSBlock.getRSBlocks(typeNumber, errorCorrectLevel);
+	
+	var buffer = new QRBitBuffer();
+	
+	for (var i = 0; i < dataList.length; i++) {
+		var data = dataList[i];
+		buffer.put(data.mode, 4);
+		buffer.put(data.getLength(), QRUtil.getLengthInBits(data.mode, typeNumber) );
+		data.write(buffer);
+	}
+
+	// calc num max data.
+	var totalDataCount = 0;
+	for (var x = 0; x < rsBlocks.length; x++) {
+		totalDataCount += rsBlocks[x].dataCount;
+	}
+
+	if (buffer.getLengthInBits() > totalDataCount * 8) {
+		throw new Error("code length overflow. (" + 
+            buffer.getLengthInBits() + 
+            ">" +  
+            totalDataCount * 8 + 
+            ")");
+	}
+
+	// end code
+	if (buffer.getLengthInBits() + 4 <= totalDataCount * 8) {
+		buffer.put(0, 4);
+	}
+
+	// padding
+	while (buffer.getLengthInBits() % 8 !== 0) {
+		buffer.putBit(false);
+	}
+
+	// padding
+	while (true) {
+		
+		if (buffer.getLengthInBits() >= totalDataCount * 8) {
+			break;
+		}
+		buffer.put(QRCode.PAD0, 8);
+		
+		if (buffer.getLengthInBits() >= totalDataCount * 8) {
+			break;
+		}
+		buffer.put(QRCode.PAD1, 8);
+	}
+
+	return QRCode.createBytes(buffer, rsBlocks);
+};
+
+QRCode.createBytes = function(buffer, rsBlocks) {
+
+	var offset = 0;
+	
+	var maxDcCount = 0;
+	var maxEcCount = 0;
+	
+	var dcdata = new Array(rsBlocks.length);
+	var ecdata = new Array(rsBlocks.length);
+	
+	for (var r = 0; r < rsBlocks.length; r++) {
+
+		var dcCount = rsBlocks[r].dataCount;
+		var ecCount = rsBlocks[r].totalCount - dcCount;
+
+		maxDcCount = Math.max(maxDcCount, dcCount);
+		maxEcCount = Math.max(maxEcCount, ecCount);
+		
+		dcdata[r] = new Array(dcCount);
+		
+		for (var i = 0; i < dcdata[r].length; i++) {
+			dcdata[r][i] = 0xff & buffer.buffer[i + offset];
+		}
+		offset += dcCount;
+		
+		var rsPoly = QRUtil.getErrorCorrectPolynomial(ecCount);
+		var rawPoly = new QRPolynomial(dcdata[r], rsPoly.getLength() - 1);
+
+		var modPoly = rawPoly.mod(rsPoly);
+		ecdata[r] = new Array(rsPoly.getLength() - 1);
+		for (var x = 0; x < ecdata[r].length; x++) {
+            var modIndex = x + modPoly.getLength() - ecdata[r].length;
+			ecdata[r][x] = (modIndex >= 0)? modPoly.get(modIndex) : 0;
+		}
+
+	}
+	
+	var totalCodeCount = 0;
+	for (var y = 0; y < rsBlocks.length; y++) {
+		totalCodeCount += rsBlocks[y].totalCount;
+	}
+
+	var data = new Array(totalCodeCount);
+	var index = 0;
+
+	for (var z = 0; z < maxDcCount; z++) {
+		for (var s = 0; s < rsBlocks.length; s++) {
+			if (z < dcdata[s].length) {
+				data[index++] = dcdata[s][z];
+			}
+		}
+	}
+
+	for (var xx = 0; xx < maxEcCount; xx++) {
+		for (var t = 0; t < rsBlocks.length; t++) {
+			if (xx < ecdata[t].length) {
+				data[index++] = ecdata[t][xx];
+			}
+		}
+	}
+
+	return data;
+
+};
+
+return  QRCode;
+
+})();
+const QRCode=modules['index'];
+const CODE128=[[2, 1, 2, 2, 2, 2], [2, 2, 2, 1, 2, 2], [2, 2, 2, 2, 2, 1], [1, 2, 1, 2, 2, 3], [1, 2, 1, 3, 2, 2], [1, 3, 1, 2, 2, 2], [1, 2, 2, 2, 1, 3], [1, 2, 2, 3, 1, 2], [1, 3, 2, 2, 1, 2], [2, 2, 1, 2, 1, 3], [2, 2, 1, 3, 1, 2], [2, 3, 1, 2, 1, 2], [1, 1, 2, 2, 3, 2], [1, 2, 2, 1, 3, 2], [1, 2, 2, 2, 3, 1], [1, 1, 3, 2, 2, 2], [1, 2, 3, 1, 2, 2], [1, 2, 3, 2, 2, 1], [2, 2, 3, 2, 1, 1], [2, 2, 1, 1, 3, 2], [2, 2, 1, 2, 3, 1], [2, 1, 3, 2, 1, 2], [2, 2, 3, 1, 1, 2], [3, 1, 2, 1, 3, 1], [3, 1, 1, 2, 2, 2], [3, 2, 1, 1, 2, 2], [3, 2, 1, 2, 2, 1], [3, 1, 2, 2, 1, 2], [3, 2, 2, 1, 1, 2], [3, 2, 2, 2, 1, 1], [2, 1, 2, 1, 2, 3], [2, 1, 2, 3, 2, 1], [2, 3, 2, 1, 2, 1], [1, 1, 1, 3, 2, 3], [1, 3, 1, 1, 2, 3], [1, 3, 1, 3, 2, 1], [1, 1, 2, 3, 1, 3], [1, 3, 2, 1, 1, 3], [1, 3, 2, 3, 1, 1], [2, 1, 1, 3, 1, 3], [2, 3, 1, 1, 1, 3], [2, 3, 1, 3, 1, 1], [1, 1, 2, 1, 3, 3], [1, 1, 2, 3, 3, 1], [1, 3, 2, 1, 3, 1], [1, 1, 3, 1, 2, 3], [1, 1, 3, 3, 2, 1], [1, 3, 3, 1, 2, 1], [3, 1, 3, 1, 2, 1], [2, 1, 1, 3, 3, 1], [2, 3, 1, 1, 3, 1], [2, 1, 3, 1, 1, 3], [2, 1, 3, 3, 1, 1], [2, 1, 3, 1, 3, 1], [3, 1, 1, 1, 2, 3], [3, 1, 1, 3, 2, 1], [3, 3, 1, 1, 2, 1], [3, 1, 2, 1, 1, 3], [3, 1, 2, 3, 1, 1], [3, 3, 2, 1, 1, 1], [3, 1, 4, 1, 1, 1], [2, 2, 1, 4, 1, 1], [4, 3, 1, 1, 1, 1], [1, 1, 1, 2, 2, 4], [1, 1, 1, 4, 2, 2], [1, 2, 1, 1, 2, 4], [1, 2, 1, 4, 2, 1], [1, 4, 1, 1, 2, 2], [1, 4, 1, 2, 2, 1], [1, 1, 2, 2, 1, 4], [1, 1, 2, 4, 1, 2], [1, 2, 2, 1, 1, 4], [1, 2, 2, 4, 1, 1], [1, 4, 2, 1, 1, 2], [1, 4, 2, 2, 1, 1], [2, 4, 1, 2, 1, 1], [2, 2, 1, 1, 1, 4], [4, 1, 3, 1, 1, 1], [2, 4, 1, 1, 1, 2], [1, 3, 4, 1, 1, 1], [1, 1, 1, 2, 4, 2], [1, 2, 1, 1, 4, 2], [1, 2, 1, 2, 4, 1], [1, 1, 4, 2, 1, 2], [1, 2, 4, 1, 1, 2], [1, 2, 4, 2, 1, 1], [4, 1, 1, 2, 1, 2], [4, 2, 1, 1, 1, 2], [4, 2, 1, 2, 1, 1], [2, 1, 2, 1, 4, 1], [2, 1, 4, 1, 2, 1], [4, 1, 2, 1, 2, 1], [1, 1, 1, 1, 4, 3], [1, 1, 1, 3, 4, 1], [1, 3, 1, 1, 4, 1], [1, 1, 4, 1, 1, 3], [1, 1, 4, 3, 1, 1], [4, 1, 1, 1, 1, 3], [4, 1, 1, 3, 1, 1], [1, 1, 3, 1, 4, 1], [1, 1, 4, 1, 3, 1], [3, 1, 1, 1, 4, 1], [4, 1, 1, 1, 3, 1], [2, 1, 1, 4, 1, 2], [2, 1, 1, 2, 1, 4], [2, 1, 1, 2, 3, 2], [2, 3, 3, 1, 1, 1, 2]];
+
+const WIDTH=384;
+const LABEL={width:311,x:71,top:17,verifiedHeight:120};
+function crc8(bytes){let crc=0;for(const b of bytes){crc^=b;for(let i=0;i<8;i++)crc=(crc&128)?((crc<<1)^7)&255:(crc<<1)&255;}return crc;}
+function frame(cmd,data=[]){const p=Uint8Array.from(data);if(p.length>65535)throw Error('Daten zu lang');return Uint8Array.from([0x51,0x78,cmd,0,p.length&255,p.length>>8,...p,crc8(p),0xff]);}
+function hex(bytes){return [...bytes].map(x=>x.toString(16).padStart(2,'0')).join('').toUpperCase()}
+const C={status:()=>frame(0xA3,[0]),level:()=>frame(0xA4,[0x33]),start:()=>frame(0xA6,[0xAA,0x55,0x17,0x38,0x44,0x5f,0x5f,0x5f,0x44,0x38,0x2c]),end:()=>frame(0xA6,[0xAA,0x55,0x17,0,0,0,0,0,0,0,0x17]),energy:()=>frame(0xAF,[0x10,0x27]),mode:()=>frame(0xBE,[0]),before:()=>frame(0xBD,[0x0a]),after:()=>frame(0xBD,[0x19]),label:()=>frame(0xF5,[1]),align:()=>frame(0xF3,[0]),labelEnd:()=>frame(0xA1,[1,0]),feed:()=>frame(0xA1,[0x30,0])};
+function rowFrame(row){if(row.length!==48)throw Error('Zeile muss 48 Bytes haben');return frame(0xA2,row)}
+function bitmapToRows(rgba,width,height,threshold=128){if(width!==384||height<1||height>640)throw Error('Ungültige Bildabmessungen');const out=[];for(let y=0;y<height;y++){const row=new Uint8Array(48);for(let x=0;x<384;x++){const i=(y*384+x)*4,a=rgba[i+3]/255,r=rgba[i]*a+255*(1-a),g=rgba[i+1]*a+255*(1-a),b=rgba[i+2]*a+255*(1-a);if(.299*r+.587*g+.114*b<threshold)row[x>>3]|=1<<(x&7);}out.push(row)}return out}
+function job(rows,label=true){if(rows.length<1||rows.length>640)throw Error('Zu viele Druckzeilen');const parts=[...(label?[C.label()]:[]),C.status(),C.level(),C.start(),C.energy(),C.mode(),C.before(),...rows.map(rowFrame),C.after(),...(!label?[C.feed()]:[]),C.end(),C.status(),C.status(),...(label?[C.labelEnd()]:[])];let n=parts.reduce((s,p)=>s+p.length,0),out=new Uint8Array(n),pos=0;for(const p of parts){out.set(p,pos);pos+=p.length}return out}
+function parseFrame(b){if(b.length<8||b[0]!==0x51||b[1]!==0x78||b[b.length-1]!==0xff)return null;const len=b[4]|b[5]<<8;if(b.length!==len+8)return null;const data=b.slice(6,6+len);return {cmd:b[2],flags:b[3],data,valid:crc8(data)===b[6+len]}}
+
+const $=id=>document.getElementById(id), mmToPx=mm=>mm*200/25.4, clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+const PRESETS={'40x20':[40,20,2,17],'50x50':[50,50,10,19],'30x15':[30,15,8,17],'25x25':[25,25,1,18],'20x10':[20,10,8,18]};
+const T={de:{subtitle:'Etiketteneditor · Direkt per Bluetooth · Keine Cloud',connectionTitle:'01 · Druckerverbindung',connect:'Bluetooth verbinden',disconnect:'Trennen',status:'Status abfragen',position:'Etikett positionieren',paperTitle:'02 · Papierformat',format:'Etikettenformat',custom:'Benutzerdefiniert',width:'Breite (mm)',height:'Höhe (mm)',offsetX:'Druckversatz X (Punkte)',offsetY:'Druckversatz Y (Punkte)',addTitle:'03 · Elemente hinzufügen',addText:'+ Text',addQr:'+ QR',upload:'Bild (PNG/JPG/WebP)',dragHint:'Element im Etikett ziehen. Einstellungen rechts bearbeiten.',templates:'04 · Vorlagen',name:'Vorlagenname',save:'Speichern',export:'JSON exportieren',choose:'Gespeicherte Vorlage wählen',load:'Laden',delete:'Löschen',import:'Vorlage importieren (JSON)',localSave:'Vorlagen bleiben lokal in diesem Browser gespeichert.',preview:'Etiketteneditor · maßstabsgetreues Seitenverhältnis',previewHint:'Die Vorschau zeigt die korrekten Proportionen, nicht die physische Originalgröße am Bildschirm.',png:'PNG herunterladen',clearAll:'Alle Elemente löschen',threshold:'Schwarzweiß-Schwelle: ',printTitle:'05 · Drucken',ack:'Ich bestätige den echten Druck mit eingelegtem Papier.',print:'Ein Etikett drucken',stop:'Druck stoppen',printHint:'Einzelauftrag, identisches Bluetooth-Protokoll zur erfolgreichen Beta 0.1.',properties:'Element-Eigenschaften',selectHint:'Text, Bild, QR-Code oder Barcode auswählen.',content:'Inhalt',font:'Schriftart',fontSize:'Schriftgröße (px)',alignment:'Textausrichtung',left:'Linksbündig',center:'Zentriert',right:'Rechtsbündig',elWidth:'Breite (mm)',elHeight:'Höhe (mm)',rotation:'Drehung (°)',scale:'Skalierung (%)',duplicate:'Duplizieren',remove:'Entfernen',rotationHint:'Position, Größe und Drehung sind relativ zur Etikettenfläche.',logs:'Bluetooth-Protokoll',clearLog:'Leeren',saveLog:'Log speichern',footer:'BQ03 Studio · Nur lokal im Browser · Keine Druckdaten an fremde Server',unverified:'Noch nicht mit deinem BQ03 getestet. Beim Drucken beobachten; Abbruch jederzeit möglich.',verified:'40 × 20 mm ist erfolgreich an deinem Drucker getestet.',connected:'● BQ03 verbunden',disconnected:'● Nicht verbunden'},en:{subtitle:'Label editor · Direct Bluetooth · No cloud',connectionTitle:'01 · Printer connection',connect:'Connect Bluetooth',disconnect:'Disconnect',status:'Check status',position:'Align label',paperTitle:'02 · Paper format',format:'Label size',custom:'Custom',width:'Width (mm)',height:'Height (mm)',offsetX:'Print offset X (dots)',offsetY:'Print offset Y (dots)',addTitle:'03 · Add elements',addText:'+ Text',addQr:'+ QR',upload:'Image (PNG/JPG/WebP)',dragHint:'Drag elements on the label. Edit properties on the right.',templates:'04 · Templates',name:'Template name',save:'Save',export:'Export JSON',choose:'Choose saved template',load:'Load',delete:'Delete',import:'Import template (JSON)',localSave:'Templates are stored locally in this browser.',preview:'Label editor · correct proportions',previewHint:'The preview shows correct proportions, not real-life screen size.',png:'Download PNG',clearAll:'Remove all elements',threshold:'Black/white threshold: ',printTitle:'05 · Print',ack:'I confirm printing on my device with paper loaded.',print:'Print one label',stop:'Stop printing',printHint:'One job, same working Bluetooth protocol as Beta 0.1.',properties:'Element properties',selectHint:'Select text, image, QR code or barcode.',content:'Content',font:'Font',fontSize:'Font size (px)',alignment:'Text alignment',left:'Left',center:'Center',right:'Right',elWidth:'Width (mm)',elHeight:'Height (mm)',rotation:'Rotation (°)',scale:'Scale (%)',duplicate:'Duplicate',remove:'Remove',rotationHint:'Position, dimensions and angle are relative to label.',logs:'Bluetooth log',clearLog:'Clear',saveLog:'Save log',footer:'BQ03 Studio · Local browser app · No data sent to remote services',unverified:'Not yet tested with your BQ03. Watch printing and stop if needed.',verified:'40 × 20 mm has been successfully tested on your printer.',connected:'● BQ03 connected',disconnected:'● Disconnected'}};
+let lang='de',width=40,height=20,objects=[],selected=null,drag=null,device,writeChar,notifyChar,printing=false,abort=false,ready=false,counter=1;
+const canvas=$('editor'),ctx=canvas.getContext('2d'),printCanvas=document.createElement('canvas'),printCtx=printCanvas.getContext('2d',{willReadFrequently:true});
+const log=m=>{let st=new Date().toLocaleTimeString();$('log').textContent+=`\n[${st}] ${m}`;$('log').scrollTop=$('log').scrollHeight};
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+function translate(){document.documentElement.lang=lang;document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.dataset.i18n;if(T[lang][k])el.textContent=T[lang][k]});$('thresholdVal').textContent=$('threshold').value;updateConnection();draw()}
+try{$('lang').value=localStorage.getItem('bq03-lang')||'de'}catch{$('lang').value='de'};lang=$('lang').value;$('lang').onchange=()=>{lang=$('lang').value;try{localStorage.setItem('bq03-lang',lang)}catch{}translate()};
+const textObj=(text='Mein BQ03')=>({id:counter++,type:'text',text,x:3,y:3,w:34,h:9,rotation:0,scale:100,font:'Arial',fontSize:23,align:'center'});
+const newObj=(type,text)=>({id:counter++,type,text,x:3,y:3,w:type==='qr'?14:Math.min(34,width-6),h:type==='qr'?14:9,rotation:0,scale:100,font:'Arial',fontSize:22,align:'center'});
+function fitObject(o){o.x=clamp(o.x,-width,width);o.y=clamp(o.y,-height,height);o.w=clamp(o.w,1,100);o.h=clamp(o.h,1,100);return o}
+function setFormat(key){if(key!=='custom'){const [w,h]=PRESETS[key];width=w;height=h;$('widthmm').value=w;$('heightmm').value=h;$('offsetX').value=0;$('offsetY').value=0}draw()}
+$('preset').onchange=()=>setFormat($('preset').value);
+for(const id of ['widthmm','heightmm'])$(id).onchange=()=>{width=clamp(Number($('widthmm').value)||40,10,50);height=clamp(Number($('heightmm').value)||20,5,70);$('widthmm').value=width;$('heightmm').value=height;$('preset').value=Object.entries(PRESETS).find(([,v])=>v[0]===width&&v[1]===height)?.[0]||'custom';draw()};
+for(const id of ['offsetX','offsetY','threshold'])$(id).oninput=()=>draw();
+const drawShape=(g,o,unit)=>{g.save();g.translate((o.x+o.w/2)*unit,(o.y+o.h/2)*unit);g.rotate(o.rotation*Math.PI/180);g.scale(o.scale/100,o.scale/100);let w=o.w*unit,h=o.h*unit;g.beginPath();g.rect(-w/2,-h/2,w,h);g.clip();g.fillStyle='#000';const text=o.text||'';
+if(o.type==='text'){g.font=`${Math.max(4,o.fontSize*unit/mmToPx(1))}px "${o.font||'Arial'}",sans-serif`;g.textBaseline='middle';g.textAlign=o.align||'center';const x=o.align==='left'?-w/2+1:o.align==='right'?w/2-1:0;const lines=text.split('\n').slice(0,12),size=o.fontSize*unit/mmToPx(1);lines.forEach((line,i)=>g.fillText(line,x,(i-(lines.length-1)/2)*size*1.2,w-2));}
+else if(o.type==='image'&&o.image){const img=imageCache.get(o.id);if(img){let scale=Math.min(w/img.width,h/img.height);g.drawImage(img,-img.width*scale/2,-img.height*scale/2,img.width*scale,img.height*scale)}}
+else if(o.type==='qr'){try{const qr=new QRCode(0,1);qr.addData(text);qr.make();const n=qr.getModuleCount(),pad=4;const cell=Math.min(w,h)/(n+pad*2);g.fillStyle='white';g.fillRect(-w/2,-h/2,w,h);g.fillStyle='black';for(let y=0;y<n;y++)for(let x=0;x<n;x++)if(qr.isDark(y,x))g.fillRect(-w/2+(x+pad)*cell,-h/2+(y+pad)*cell,Math.ceil(cell),Math.ceil(cell))}catch(err){log('QR: '+err.message)}}
+else if(o.type==='ean'||o.type==='code128'){try{const bars=o.type==='ean'?ean13(text):code128(text);g.fillStyle='white';g.fillRect(-w/2,-h/2,w,h);g.fillStyle='black';const stripe=w/bars.length;for(let i=0;i<bars.length;i++)if(bars[i])g.fillRect(-w/2+i*stripe,-h/2,Math.ceil(stripe),h)}catch(e){/* Invalid user data is shown in properties and logged when added */}}
+g.restore()};
+const imageCache=new Map();
+const EAN_L=['0001101','0011001','0010011','0111101','0100011','0110001','0101111','0111011','0110111','0001011'];
+const EAN_G=['0100111','0110011','0011011','0100001','0011101','0111001','0000101','0010001','0001001','0010111'];
+const EAN_R=['1110010','1100110','1101100','1000010','1011100','1001110','1010000','1000100','1001000','1110100'];
+const EAN_PAR=['LLLLLL','LLGLGG','LLGGLG','LLGGGL','LGLLGG','LGGLLG','LGGGLL','LGLGLG','LGLGGL','LGGLGL'];
+function ean13(v){if(!/^\d{12,13}$/.test(v))throw Error('EAN-13 benötigt 12 oder 13 Ziffern');const base=v.slice(0,12);let sum=0;for(let i=0;i<12;i++)sum+=+base[i]*(i%2?3:1);const check=(10-sum%10)%10;if(v.length===13&&+v[12]!==check)throw Error('EAN-Prüfziffer falsch');v=base+check;let s='101';const parity=EAN_PAR[+v[0]];for(let i=1;i<=6;i++)s+=(parity[i-1]==='L'?EAN_L:EAN_G)[+v[i]];s+='01010';for(let i=7;i<13;i++)s+=EAN_R[+v[i]];return s+'101'}
+function code128(v){if(!v||[...v].some(ch=>ch.charCodeAt(0)<32||ch.charCodeAt(0)>126))throw Error('Code 128: nur ASCII 32–126');const vals=[104,...[...v].map(ch=>ch.charCodeAt(0)-32)];let chk=104;for(let i=1;i<vals.length;i++)chk+=i*vals[i];vals.push(chk%103,106);return vals.flatMap(i=>CODE128[i].flatMap((n,j)=>Array(n).fill(j%2===0?1:0)))}
+function draw(){if(!ctx)return;const ratio=10, cw=Math.round(width*ratio),ch=Math.round(height*ratio);canvas.width=cw;canvas.height=ch;const viewMax=560,viewW=Math.min(viewMax,Math.max(150,cw));const fitted=Math.min(1,viewMax/cw);$('paperWrap').style.width=`${Math.round(cw*fitted)}px`;$('paperWrap').style.height=`${Math.round(ch*fitted)}px`;ctx.fillStyle='#fff';ctx.fillRect(0,0,cw,ch);for(const o of objects)drawShape(ctx,o,ratio);if(selected){const o=objects.find(v=>v.id===selected);if(o){ctx.save();ctx.translate((o.x+o.w/2)*ratio,(o.y+o.h/2)*ratio);ctx.rotate(o.rotation*Math.PI/180);ctx.strokeStyle='#456cf7';ctx.lineWidth=2;ctx.setLineDash([5,3]);ctx.strokeRect(-o.w*ratio/2,-o.h*ratio/2,o.w*ratio,o.h*ratio);ctx.restore()}}
+$('labelMeasurements').textContent=`${width} × ${height} mm · ${width/height>1?'▭':width/height===1?'□':'▯'}`;
+const configured=$('preset').value;const validated=configured==='40x20'&&width===40&&height===20&&Number($('offsetX').value)===0&&Number($('offsetY').value)===0;
+$('printingWarning').textContent=(validated?T[lang].verified:T[lang].unverified)+' '+(width===50?'50 mm überschreitet möglicherweise die Druckkopfbreite; Inhalt wird begrenzt.':'');
+const [, ,right,top]=PRESETS[configured]||[width,height,2,17];const targetWidth=validated?311:Math.min(384-right,Math.floor(mmToPx(width)*.99));const sourceTop=top+Number($('offsetY').value||0);const sourceX=384-right-targetWidth+Number($('offsetX').value||0);const contentH=validated?120:Math.ceil(mmToPx(height));const heightPixels=Math.ceil(Math.max(1,sourceTop)+contentH);$('formatNote').textContent=`Druckbereich ${targetWidth} Punkte · X=${sourceX} · oberer Rand ${sourceTop} Punkte. ${validated?'✓ Hardwaretest erfolgreich':'Nicht hardwaregetestet'}`;
+$('pixels').textContent=`Raster: 384 × ${heightPixels} px`;
+try{const rows=renderPrint();const n=job(rows,true).length;$('bytes').textContent=`${n.toLocaleString(lang)} Bytes`;$('duration').textContent=`~${(Math.ceil(n/20)*.03).toFixed(1)} s`; $('print').disabled=!device?.gatt?.connected||!$('ack').checked||printing}catch(e){$('bytes').textContent=e.message;$('print').disabled=true}
+}
+function renderPrint(){let preset=$('preset').value,[,,right,top]=PRESETS[preset]||[width,height,2,17],known=preset==='40x20'&&width===40&&height===20;const w=known?311:Math.min(384-right,Math.floor(mmToPx(width)*.99)),h=known?120:Math.ceil(mmToPx(height));const x=384-right-w+Number($('offsetX').value||0),y=top+Number($('offsetY').value||0);const count=Math.ceil(Math.max(0,y)+h);if(count<1||count>640)throw Error('Rasterhöhe außerhalb sicherer Grenzen (max. 640 Zeilen)');printCanvas.width=384;printCanvas.height=count;printCtx.fillStyle='white';printCtx.fillRect(0,0,384,count);printCtx.save();printCtx.beginPath();printCtx.rect(x,y,w,h);printCtx.clip();printCtx.translate(x,y);printCtx.scale(w/width,h/height);for(const o of objects)drawShape(printCtx,o,1);printCtx.restore();return bitmapToRows(printCtx.getImageData(0,0,384,count).data,384,count,+$('threshold').value)}
+function selectedObj(){return objects.find(v=>v.id===selected)}
+const propertyIds=['elementText','fontFamily','fontSize','textAlign','elementX','elementY','elementW','elementH','elementRotation','elementScale'];
+function showProperties(){const o=selectedObj();$('propertiesForm').hidden=!o;$('noSelection').hidden=!!o;if(!o)return;const mapping={elementText:o.text,fontFamily:o.font,fontSize:o.fontSize,textAlign:o.align,elementX:o.x,elementY:o.y,elementW:o.w,elementH:o.h,elementRotation:o.rotation,elementScale:o.scale};for(const [k,v] of Object.entries(mapping))$(k).value=v;$('elementText').disabled=o.type==='image';for(const id of ['fontFamily','fontSize','textAlign'])$(id).disabled=o.type!=='text'}
+function updateProps(){const o=selectedObj();if(!o)return;Object.assign(o,{text:$('elementText').value,font:$('fontFamily').value,fontSize:clamp(+$('fontSize').value||23,7,140),align:$('textAlign').value,x:+$('elementX').value||0,y:+$('elementY').value||0,w:clamp(+$('elementW').value||1,1,100),h:clamp(+$('elementH').value||1,1,100),rotation:+$('elementRotation').value||0,scale:clamp(+$('elementScale').value||100,10,300)});draw()}
+for(const id of propertyIds)$(id).addEventListener('input',updateProps);
+function add(o){objects.push(fitObject(o));selected=o.id;showProperties();draw()}
+$('addText').onclick=()=>add(textObj('Neuer Text'));
+$('addQr').onclick=()=>add(newObj('qr','https://example.com'));
+$('addEan').onclick=()=>add(newObj('ean','4006381333931'));
+$('add128').onclick=()=>add(newObj('code128','BQ03-12345'));
+$('imageFile').onchange=async e=>{const f=e.target.files?.[0];if(!f||f.size>3_000_000){log('Maximal 3 MB pro Bild');return}try{const encoded=await new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(f)});const o=newObj('image','');o.image=encoded;add(o);await loadImage(o)}catch(err){log(err.message)}};
+async function loadImage(o){if(!o.image)return;const img=new Image();await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=reject;img.src=o.image});imageCache.set(o.id,img);draw()}
+function point(event){const r=canvas.getBoundingClientRect();return {x:(event.clientX-r.left)/r.width*width,y:(event.clientY-r.top)/r.height*height}}
+function hit(o,p){const cx=o.x+o.w/2,cy=o.y+o.h/2,theta=-o.rotation*Math.PI/180,dx=p.x-cx,dy=p.y-cy,u=dx*Math.cos(theta)-dy*Math.sin(theta),v=dx*Math.sin(theta)+dy*Math.cos(theta);return Math.abs(u)<=o.w*o.scale/200&&Math.abs(v)<=o.h*o.scale/200}
+canvas.addEventListener('pointerdown',e=>{const p=point(e);const match=[...objects].reverse().find(o=>hit(o,p));selected=match?.id||null;showProperties();draw();if(match){drag={ox:p.x-match.x,oy:p.y-match.y};canvas.setPointerCapture(e.pointerId)}});
+canvas.addEventListener('pointermove',e=>{if(!drag)return;const o=selectedObj();if(!o)return;const p=point(e);o.x=clamp(Math.round((p.x-drag.ox)*10)/10,-o.w,width);o.y=clamp(Math.round((p.y-drag.oy)*10)/10,-o.h,height);showProperties();draw()});
+for(const ev of ['pointerup','pointercancel','lostpointercapture'])canvas.addEventListener(ev,()=>drag=null);
+$('duplicate').onclick=()=>{const o=selectedObj();if(!o)return;const copy=structuredClone(o);copy.id=counter++;copy.x+=2;copy.y+=2;if(o.image)loadImage(copy);add(copy)};
+$('deleteElement').onclick=()=>{objects=objects.filter(o=>o.id!==selected);imageCache.delete(selected);selected=null;showProperties();draw()};
+$('removeAll').onclick=()=>{if(confirm(lang==='de'?'Alle Elemente entfernen?':'Remove all elements?')){objects=[];selected=null;showProperties();draw()}};
+function blobDownload(content,name,type){const url=URL.createObjectURL(new Blob([content],{type})),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+$('download').onclick=()=>{renderPrint();printCanvas.toBlob(b=>{if(b)blobDownload(b,'bq03-etikett.png','image/png')},'image/png')};
+const KEY='bq03-templates-v02';function saved(){try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch{return {}}}
+function readLayout(){return {version:2,width,height,preset:$('preset').value,offsetX:+$('offsetX').value,offsetY:+$('offsetY').value,objects:objects.map(o=>({...o}))}}
+function refreshTemplates(){let s=saved(),current=$('templatesList').value;$('templatesList').replaceChildren(new Option(T[lang].choose,''),...Object.keys(s).map(k=>new Option(k,k)));$('templatesList').value=current in s?current:''}
+function restoreLayout(v){if(!v||!Array.isArray(v.objects)||v.objects.length>100||!Number.isFinite(+v.width)||!Number.isFinite(+v.height))throw Error('Ungültiges Vorlagenformat');width=clamp(+v.width,10,50);height=clamp(+v.height,5,70);$('widthmm').value=width;$('heightmm').value=height;$('preset').value=(v.preset in PRESETS&&PRESETS[v.preset][0]===width&&PRESETS[v.preset][1]===height)?v.preset:'custom';$('offsetX').value=clamp(+v.offsetX||0,-40,40);$('offsetY').value=clamp(+v.offsetY||0,-40,40);objects=v.objects.map(o=>{const n={...o,id:counter++,type:['text','qr','ean','code128','image'].includes(o.type)?o.type:'text',x:clamp(+o.x||0,-100,100),y:clamp(+o.y||0,-100,100),w:clamp(+o.w||10,1,100),h:clamp(+o.h||10,1,100),rotation:clamp(+o.rotation||0,-360,360),scale:clamp(+o.scale||100,10,300),fontSize:clamp(+o.fontSize||23,7,140),text:String(o.text||'').slice(0,1000)};if(n.image&&n.image.length>4_000_000)delete n.image;return n});imageCache.clear();for(const o of objects)if(o.image)loadImage(o).catch(e=>log(e.message));selected=null;showProperties();draw()}
+$('saveTemplate').onclick=()=>{const name=$('templateName').value.trim();if(!name)return alert('Bitte einen Vorlagennamen eingeben.');try{const s=saved();s[name]=readLayout();localStorage.setItem(KEY,JSON.stringify(s));refreshTemplates();$('templatesList').value=name;log('Vorlage gespeichert: '+name)}catch(e){alert('Lokaler Speicher voll: '+e.message)}};
+$('loadTemplate').onclick=()=>{try{const v=saved()[$('templatesList').value];if(v)restoreLayout(v)}catch(e){alert(e.message)}};
+$('deleteTemplate').onclick=()=>{const name=$('templatesList').value;if(!name)return;const s=saved();delete s[name];localStorage.setItem(KEY,JSON.stringify(s));refreshTemplates()};
+$('exportTemplate').onclick=()=>blobDownload(JSON.stringify(readLayout(),null,2),'bq03-vorlage.json','application/json');
+$('importTemplate').onchange=async e=>{try{const file=e.target.files[0];if(!file||file.size>5_000_000)throw Error('Datei zu groß');restoreLayout(JSON.parse(await file.text()))}catch(err){alert(err.message)}};
+function updateConnection(){const on=!!device?.gatt?.connected&&!!writeChar;$('connection').textContent=on?T[lang].connected:T[lang].disconnected;$('connection').classList.toggle('good',on);$('connect').disabled=on||printing;$('disconnect').disabled=!on||printing;$('status').disabled=!on||printing;$('align').disabled=!on||printing;$('print').disabled=!on||printing||!$('ack').checked;$('stop').disabled=!printing}
+function notify(event){const data=new Uint8Array(event.target.value.buffer,event.target.value.byteOffset,event.target.value.byteLength);log('RX '+hex(data));const f=parseFrame(data);if(!f||!f.valid){abort=true;log('STOP: ungültiger Rahmen');return}if([0xD6,0xBB,0xD7].includes(f.cmd)){abort=true;log('STOP: Authentifizierung oder unbekannte Meldung');return}if(f.cmd===0xA3){let s=f.data[0];if(s===0){ready=true;log('Drucker bereit')}else if(s===0x80){log('Beschäftigt')}else{ready=false;abort=true;log('STOP: Status '+s)}}else if(f.cmd===0xAE){if(f.data[0]===0x10||f.data[0]!==0){abort=true;log('STOP: Flusskontrolle')}}else if(f.cmd===0xF3&&f.data[0]===1){log('Etikett positioniert')}else{abort=true;log('STOP: Unbekannte Meldung '+f.cmd.toString(16))}}
+async function send(bytes){if(!writeChar||!device?.gatt?.connected)throw Error('Nicht verbunden');if(writeChar.writeValueWithoutResponse)await writeChar.writeValueWithoutResponse(bytes);else await writeChar.writeValue(bytes)}
+async function disconnect(){try{device?.gatt?.disconnect()}catch{}writeChar=null;notifyChar=null;ready=false;updateConnection()}
+$('connect').onclick=async()=>{if(!navigator.bluetooth)return log('Web Bluetooth benötigt Chrome/Edge + HTTPS');try{device=await navigator.bluetooth.requestDevice({filters:[{namePrefix:'BQ03'}],optionalServices:[0xae30]});device.addEventListener('gattserverdisconnected',()=>{abort=true;writeChar=null;ready=false;log('Verbindung getrennt');updateConnection()});const server=await device.gatt.connect(),service=await server.getPrimaryService(0xae30);writeChar=await service.getCharacteristic(0xae01);notifyChar=await service.getCharacteristic(0xae02);await notifyChar.startNotifications();notifyChar.addEventListener('characteristicvaluechanged',notify);log('Verbunden: '+device.name);updateConnection()}catch(err){log('Bluetooth-Fehler: '+err.message);await disconnect()}};
+$('disconnect').onclick=disconnect;
+$('status').onclick=async()=>{try{abort=false;ready=false;await send(C.status());log('Statusabfrage gesendet')}catch(e){log(e.message)}};
+$('align').onclick=async()=>{if(!confirm('Papier bis zur nächsten Etikettenkante bewegen?'))return;try{abort=false;await send(C.align());log('Positionierung gesendet')}catch(e){log(e.message)}};
+$('ack').onchange=updateConnection;
+$('print').onclick=async()=>{if(printing||!$('ack').checked)return;const size=`${width} × ${height} mm`;if(!confirm(`${size} – EIN Etikett drucken?\n${$('preset').value==='40x20'?T[lang].verified:T[lang].unverified}`))return;printing=true;abort=false;ready=false;updateConnection();try{const rows=renderPrint();const bytes=job(rows,true);await send(C.status());for(let i=0;i<25&&!ready&&!abort;i++)await sleep(100);if(abort||!ready)throw Error('Kein bestätigter Bereitschaftsstatus');log(`Sende ${bytes.length} Byte, ${rows.length} Zeilen`);for(let i=0;i<bytes.length;i+=20){if(abort||!device?.gatt?.connected)throw Error('Abbruch / Verbindung getrennt');await send(bytes.slice(i,i+20));await sleep(30)}log('Druckdaten übertragen')}catch(err){log('Druck abgebrochen: '+err.message);if(abort)await disconnect()}finally{printing=false;updateConnection()}};
+$('stop').onclick=()=>{abort=true;log('Abbruch angefordert')};
+$('clearLog').onclick=()=>$('log').textContent='Log geleert';$('saveLog').onclick=()=>blobDownload($('log').textContent,'bq03-bluetooth-log.txt','text/plain');
+$('threshold').oninput=()=>{$('thresholdVal').textContent=$('threshold').value;draw()};
+objects=[textObj('Mein BQ03\nTestetikett')];selected=objects[0].id;showProperties();refreshTemplates();translate();
+</script></body></html>
