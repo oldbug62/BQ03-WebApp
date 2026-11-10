@@ -1,0 +1,2 @@
+QR Code JavaScript algorithm: Kazuhiko Arase, MIT license, http://www.d-project.com/
+Code128 patterns are standardized barcode symbology data.

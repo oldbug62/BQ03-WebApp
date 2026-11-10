@@ -1,21 +1,38 @@
-# BQ03 Studio – Web Bluetooth (Beta 0.1)
+# BQ03 Studio – Web Beta 0.2
 
-Eigenständige deutschsprachige Web-App für **BQ03 / V5G**, nicht für AH-M2. Basierend auf den vom Eigentümer bereitgestellten Hardwaretestprotokollen der BQ03-Windows-Beta 0.2 und dem browserbasierten Ansatz von sajingeo/blethermal. Kein Quellcode des fremden Projekts kopiert.
+Die Web-App für den **BQ03** mit BLE V5G (AE30/AE01/AE02). Weiterentwicklung der beim Benutzer erfolgreich gedruckten Web-Beta 0.1. Die Anwendung basiert auf den vorhandenen eigenen Hardwareprotokollen, nicht auf einer AH-M2-Protokollannahme.
 
-## Start
+## Neue Funktionen
 
-- **GitHub Pages:** Die Dateien `index.html`, `app.mjs` und `protocol.mjs` in das Stammverzeichnis eines öffentlichen Repositories hochladen. Unter Settings → Pages → Deploy from a branch → main / (root) aktivieren. Nach der Veröffentlichung die HTTPS-Adresse in Chrome/Edge öffnen.
-- **Lokal:** Im Ordner `python -m http.server 8000` ausführen und `http://localhost:8000` in Chrome/Edge öffnen. Nicht über `file://` starten.
-- Drucker einschalten, andere Drucker-Apps trennen, Bluetooth verbinden, Etikett gestalten, Checkbox bestätigen und erst dann einen Druck auslösen.
+- Feste Formate **40×20 mm (hardwarebestätigt), 50×50 mm, 30×15 mm, 25×25 mm, 20×10 mm** und individuell anpassbare Etikettenmaße.
+- Vorschau im richtigen **Seitenverhältnis**; nicht im physikalischen 1:1-Maßstab auf dem Bildschirm.
+- Texte, Bilder, QR-Codes, EAN-13 und Code 128, drag-and-drop im Canvas, Position/Größe/Rotation/Skalierung, Schriftart/-größe und links/zentriert/rechts.
+- Vorlagen lokal im Browser speichern, laden, löschen, als JSON exportieren oder importieren; Deutsch/Englisch.
+- Druckversatz in Druckpunkten. PNG-Ausgabe entspricht dem Druckraster.
 
-## Verifizierungsstand
+## Update auf GitHub Pages
 
-- Automatische Node-Tests: `node --test tests/protocol.test.mjs` – V5G-Rahmen, CRC-8, belegte Kommandos, 7802-Byte-Etikettenauftrag.
-- Hardwaredaten stammen aus `HARDWARETEST_PROTOKOLL.md` der hochgeladenen ZIP: BLE `ae30/ae01/ae02`, 20-Byte-Pakete mit 30 ms Pause, 384 Pixel, 200 dpi, 40×20 mm mit 311×120 Pixel Motiv und 17 Leerzeilen.
-- **Browser-Bluetooth, UI und Druck wurden hier nicht am echten Gerät getestet.** Druck nur unter Aufsicht. Die App druckt pro Klick genau einen Auftrag und begrenzt die Druckhöhe auf 137 Zeilen im Etikettenmodus.
-- Ein Status 0x80 bedeutet „beschäftigt“; hier wird vor dem Druck auf Status 0 gewartet. Unbekannte Benachrichtigungen, D6/BB/D7 oder andere Statuswerte brechen ab. Ein Not-Stopp kann bereits gesendete Pakete nicht zurückholen.
-- Die Druckvorschau verwendet Text und optional ein Bild. Bei Bild und Text können sich Inhalte überlagern. Das Layout ist eine neue Implementierung und wurde nicht mit dem Windows-Editor abgeglichen.
+1. ZIP lokal **entpacken**.
+2. Im bestehenden GitHub-Repository `BQ03-WebApp` **alle Dateien und den Ordner `vendor`** in das Stammverzeichnis hochladen bzw. bestehende Dateien überschreiben. Die Verzeichnisstruktur `vendor/qr.mjs` muss erhalten bleiben.
+3. GitHub Pages ist bereits aktiviert. Nach dem Commit die bisherige HTTPS-Webadresse in Chrome oder Edge **mit Strg+F5** neu laden.
+4. Zuerst nur Vorschau und QR-/Barcodes testen, dann **40×20 mm** drucken. Andere Größen nur mit Papier und unter Aufsicht testen.
 
-## Nicht implementiert
+Lokal: im Projektordner `python -m http.server 8000`, dann `http://localhost:8000` in Chrome/Edge öffnen. `file://` unterstützt Web Bluetooth nicht zuverlässig.
 
-Weitere Etikettengrößen, Kopien, Dichteänderungen, dynamische Paketgrößen, Dithering, robuste Wiederaufnahme nach Bluetooth-Unterbrechung und vollständige Protokollinterpretation. Die Ausrichtung erfolgt über den separaten F3-Button, nicht automatisch vor jedem Druck.
+## Technischer Prüfstand
+
+- Unveränderte V5G-Befehlsreihenfolge `F5` + Status/Start/Energie/Bildzeilen/Ende + `A1`, 20-Byte-BLE-Blöcke, 30 ms Pause, Sicherheitsabbruch bei unbekannten Nachrichten.
+- Für **40×20 mm** mit Null-Offsets wird das bewährte Raster **384×137**, mit Bildfläche **311×120**, `x=71`, `top=17` beibehalten.
+- Die weiteren Größen basieren auf in der Hersteller-App analysierten **horizontalen** Rändern und 200-dpi-Höhenabschätzung. **Nicht hardwarebestätigt**. Bei **50×50 mm** überschreitet die theoretische Breite von 50 mm die Druckkopfbreite von 384 Punkten; die Bildbreite wird auf den Druckkopf begrenzt. Keine Garantie für Papiererkennung oder Vorschub.
+- Ein „Stop“ beendet weitere Übertragungspakete, kann bereits gesendete Daten nicht rückgängig machen.
+- Das Browserprojekt ist ein statischer Prototyp; es wurde nicht selbst auf dem physischen Drucker getestet.
+
+## Tests
+
+`node tests/protocol.test.mjs`
+
+Zusätzlich muss die Seite für eine echte Browserprüfung im Webbrowser gestartet werden. Der Druck benötigt einen echten BLE-Drucker und kann durch automatisierte Tests allein nicht bestätigt werden.
+
+## Sicherheit und Privatsphäre
+
+Web Bluetooth fragt die Zustimmung für das Gerät ab. Druckdaten werden vom Browser direkt per BLE gesendet, Vorlagen bleiben im Browser (`localStorage`). Keine Netzwerkschnittstelle für Druckdaten. Fonts sind Systemschriften. QR-Code-Algorithmus: Kazuhiko Arase, MIT; siehe `LICENSE-THIRD-PARTY.txt`.
