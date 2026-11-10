@@ -1,4 +1,4 @@
-<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>BQ03 Studio 0.3</title><style>
+<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>BQ03 Studio 0.4.1</title><style>
 :root{font-family:system-ui,Arial,sans-serif;color:#eaf0fd;background:#0c1220}*{box-sizing:border-box}body{margin:0}header{background:#141e31;border-bottom:1px solid #2d3b56;padding:18px max(16px,calc((100vw - 1380px)/2));display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}.brand{font-size:24px;font-weight:800}.muted,.hint{color:#a8b8d2;font-size:12px;line-height:1.6}.hint{margin:9px 0}main{max-width:1380px;padding:18px;margin:auto;display:grid;grid-template-columns:minmax(285px,340px) minmax(400px,1fr) minmax(255px,300px);gap:14px}.panel{background:#172237;border:1px solid #30415f;border-radius:14px;padding:16px;margin-bottom:14px}h2{font-size:15px;margin:0 0 12px}label{display:block;color:#c8d5e8;font-size:12px;margin:10px 0 5px}input,select,textarea{background:#0c1627;border:1px solid #435675;color:white;border-radius:8px;padding:9px;width:100%;font:inherit;font-size:13px}input[type=checkbox]{width:auto}input[type=range]{padding:0}textarea{min-height:65px;resize:vertical}button{cursor:pointer;background:#293b58;border:1px solid #496080;color:white;border-radius:8px;padding:9px 11px;font:inherit;font-size:12px;font-weight:650}button.primary{background:#527cef;border-color:#527cef}button.danger{background:#693142}button:disabled{opacity:.4;cursor:not-allowed}.buttons{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}.buttons>*{flex:1}.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}.three{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.pill{border:1px solid #4b5e79;padding:9px 12px;border-radius:99px;font-size:12px}.good{color:#81e7a1}.editor-area{background:#0c1423;border:1px solid #30435d;padding:20px;min-height:420px;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:auto}.ruler{font-size:12px;color:#a8b8d2;margin:8px}.paper-wrap{box-shadow:0 12px 32px #000a;position:relative;background:#fff;touch-action:none;cursor:crosshair;max-width:100%}#editor{display:block;width:100%;height:100%;touch-action:none}.stats{display:flex;gap:15px;flex-wrap:wrap;font-size:12px;color:#b2c3da;margin:12px 0}.warning{border-left:3px solid #f4b963;background:#393024;padding:10px;font-size:12px;line-height:1.5;margin:10px 0}.switch{display:flex;gap:8px;align-items:center;font-size:12px;margin-top:10px}#log{background:#0b1425;color:#b2e2b7;min-height:90px;max-height:180px;overflow:auto;white-space:pre-wrap;word-break:break-all;padding:12px;font:11px/1.5 monospace;border-radius:8px}.selected{outline:2px solid #81a0ff}.full{width:100%}footer{text-align:center;padding:22px;color:#9babca;font-size:12px}.tiny{font-size:11px}hr{border:0;border-top:1px solid #32425c;margin:14px 0}@media(max-width:1150px){main{grid-template-columns:330px 1fr}.right{grid-column:1/-1}}@media(max-width:730px){main{grid-template-columns:1fr}.right{grid-column:auto}.editor-area{min-height:270px;padding:10px}header{padding:16px}.paper-wrap{max-width:100%}}
 
 .editor-tools{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}.editor-tools button{flex:1;min-width:75px}.editor-tools .active{background:#4a69a2}.compact{font-size:12px}.choice{display:flex;gap:8px;align-items:center}.choice input{width:auto}.calibration-note{border-left:3px solid #91b8ff;padding:6px 9px;background:#23334d}.badge-small{font-size:11px;border:1px solid #506783;border-radius:8px;padding:4px}.paper-wrap.show-grid{background-image:linear-gradient(#9993 1px,transparent 1px),linear-gradient(90deg,#9993 1px,transparent 1px);background-size:20px 20px}
@@ -21,7 +21,13 @@
 </select>
 <div class="two"><div><label data-fr="inset">Rahmenabstand (mm)</label><input id="frameInset" type="number" min="0.5" max="8" step="0.25" value="1"></div><div><label data-fr="thick">Linienstärke (mm)</label><input id="frameThickness" type="number" min="0.15" max="1.2" step="0.05" value="0.25"></div></div>
 <label class="choice"><input id="showGuide" type="checkbox" checked> <span data-fr="guide">1-mm-Hilfsrahmen in Vorschau anzeigen (nicht drucken)</span></label>
-<p class="hint" data-fr="framenote">Designrahmen werden gedruckt, der rote 1-mm-Hilfsrahmen nicht. Teste die tatsächliche Randposition zuerst auf 40 × 20 mm.</p></div>
+<hr><strong>Rahmenkalibrierung je Format (mm)</strong>
+<p class="hint">Die Korrekturen wirken nur auf den gedruckten Designrahmen, nicht auf Text, Bilder oder Bluetooth. Startwerte 0; am Ausdruck messen.</p>
+<div class="two"><div><label>Horizontal verschieben (X)</label><input id="borderDx" type="number" min="-4" max="4" step="0.25" value="0"></div><div><label>Vertikal verschieben (Y)</label><input id="borderDy" type="number" min="-4" max="4" step="0.25" value="0"></div></div>
+<div class="two"><div><label>Breite ändern (+/− mm)</label><input id="borderDw" type="number" min="-6" max="6" step="0.25" value="0"></div><div><label>Höhe ändern (+/− mm)</label><input id="borderDh" type="number" min="-6" max="6" step="0.25" value="0"></div></div>
+<div class="buttons"><button id="borderReset" type="button">Korrekturen zurücksetzen</button><button id="borderTest" type="button">Nur Rahmen als Test drucken</button></div>
+<p id="borderCalStatus" class="hint"></p>
+<p class="hint" data-fr="framenote">Designrahmen werden gedruckt; der rote 1-mm-Hilfsrahmen nicht. Die Position muss am echten Drucker geprüft werden.</p></div>
 <div class="panel"><h2 data-i18n="addTitle">03 · Elemente hinzufügen</h2><div class="buttons"><button id="addText" data-i18n="addText">+ Text</button><button id="addQr" data-i18n="addQr">+ QR</button></div><div class="buttons"><button id="addEan">+ EAN-13</button><button id="add128">+ Code 128</button></div><label data-i18n="upload">Bild (PNG/JPG/WebP)</label><input id="imageFile" type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml"><p class="hint" data-i18n="dragHint">Element im Etikett ziehen. Einstellungen rechts bearbeiten.</p></div>
 <div class="panel"><h2 data-i18n="templates">04 · Vorlagen</h2><label data-i18n="name">Vorlagenname</label><input id="templateName" placeholder="Mein Etikett"><div class="buttons"><button id="saveTemplate" data-i18n="save">Speichern</button><button id="exportTemplate" data-i18n="export">JSON exportieren</button></div><select id="templatesList" style="margin-top:10px"><option value="" data-i18n="choose">Gespeicherte Vorlage wählen</option></select><div class="buttons"><button id="loadTemplate" data-i18n="load">Laden</button><button id="deleteTemplate" class="danger" data-i18n="delete">Löschen</button></div><label data-i18n="import">Vorlage importieren (JSON)</label><input id="importTemplate" type="file" accept="application/json,.json"><p class="hint" data-i18n="localSave">Vorlagen bleiben lokal in diesem Browser gespeichert.</p></div>
 </section><section>
@@ -1316,8 +1322,8 @@ const textObj=(text='Mein BQ03')=>({id:counter++,type:'text',text,x:3,y:3,w:34,h
 const newObj=(type,text)=>({id:counter++,type,text,x:3,y:3,w:type==='qr'?14:Math.min(34,width-6),h:type==='qr'?14:9,rotation:0,scale:100,font:'Arial',fontSize:22,align:'center',bold:false,italic:false,underline:false,lineSpacing:1.2});
 function fitObject(o){o.x=clamp(o.x,-width,width);o.y=clamp(o.y,-height,height);o.w=clamp(o.w,1,100);o.h=clamp(o.h,1,100);return o}
 function setFormat(key){if(key!=='custom'){const [w,h]=PRESETS[key];width=w;height=h;$('widthmm').value=w;$('heightmm').value=h;$('offsetX').value=0;$('offsetY').value=0}draw()}
-$('preset').onchange=()=>{remember();setFormat($('preset').value);loadCalibration()};
-for(const id of ['widthmm','heightmm'])$(id).onchange=()=>{remember();width=clamp(Number($('widthmm').value)||40,10,50);height=clamp(Number($('heightmm').value)||20,5,70);$('widthmm').value=width;$('heightmm').value=height;$('preset').value=Object.entries(PRESETS).find(([,v])=>v[0]===width&&v[1]===height)?.[0]||'custom';draw()};
+$('preset').onchange=()=>{remember();setFormat($('preset').value);loadCalibration();loadBorderCal()};
+for(const id of ['widthmm','heightmm'])$(id).onchange=()=>{remember();width=clamp(Number($('widthmm').value)||40,10,50);height=clamp(Number($('heightmm').value)||20,5,70);$('widthmm').value=width;$('heightmm').value=height;$('preset').value=Object.entries(PRESETS).find(([,v])=>v[0]===width&&v[1]===height)?.[0]||'custom';loadBorderCal();draw()};
 for(const id of ['offsetX','offsetY','threshold'])$(id).oninput=()=>draw();
 const drawShape=(g,o,unit)=>{g.save();g.translate((o.x+o.w/2)*unit,(o.y+o.h/2)*unit);g.rotate(o.rotation*Math.PI/180);g.scale(o.scale/100,o.scale/100);let w=o.w*unit,h=o.h*unit;g.beginPath();g.rect(-w/2,-h/2,w,h);g.clip();g.fillStyle='#000';const text=o.text||'';
 if(o.type==='text'){g.font=`${o.italic?'italic ':''}${o.bold?'bold ':''}${Math.max(4,o.fontSize*unit/mmToPx(1))}px "${o.font||'Arial'}",sans-serif`;g.textBaseline='middle';g.textAlign=o.align||'center';const x=o.align==='left'?-w/2+1:o.align==='right'?w/2-1:0;const lines=text.split('\n').slice(0,50),size=o.fontSize*unit/mmToPx(1),spacing=clamp(Number(o.lineSpacing)||1.2,.8,3);lines.forEach((line,i)=>{const yy=(i-(lines.length-1)/2)*size*spacing;g.fillText(line,x,yy,w-2);if(o.underline){const tw=Math.min(g.measureText(line).width,w-2),sx=o.align==='left'?x:o.align==='right'?x-tw:x-tw/2;g.fillRect(sx,yy+size*.39,tw,Math.max(.5,size*.055));}});}
@@ -1352,15 +1358,39 @@ case 'ornament':{stroke(m);const gap=Math.max(.7,config.thickness*3)*unit;stroke
 case 'ticket':{stroke(m,1*unit);g.beginPath();const cut=Math.min(1.1*unit,(h-2*m)/5);for(const y of [h*.35,h*.65]){g.moveTo(m,y);g.arc(m,y,cut,-Math.PI/2,Math.PI/2);g.moveTo(w-m,y);g.arc(w-m,y,cut,Math.PI/2,Math.PI*1.5)}g.stroke();break}
 }
 g.restore()}
+function drawCalibratedFrame(g,unit){const c=borderCal();g.save();g.translate(c.dx*unit,c.dy*unit);g.translate(width*unit/2,height*unit/2);g.scale((width+c.dw)/width,(height+c.dh)/height);g.translate(-width*unit/2,-height*unit/2);drawDesignerFrame(g,frameConfig(),unit);g.restore()}
+// The frame follows the nominal physical label height; content stays on the proven raster.
+// This affects only jobs with a printable design frame and NEVER the BLE protocol.
+function physicalBorderGeometry(geom){const v=borderCal(),p=mmToPx(1),fullH=Math.floor(mmToPx(height)),maxRows=Math.min(640,fullH);
+ const fullX=geom.x+v.dx*p,fullY=geom.y+v.dy*p;
+ const fullW=geom.w+(geom.w/width)*v.dw;
+ const fullBodyH=(maxRows-geom.y)+(v.dh*p);
+ if(fullW<1||fullBodyH<1||maxRows<1||maxRows>640)throw Error('Ungültige Rahmenkalibrierung');
+ const inset=frameConfig().inset,stroke=frameConfig().thickness;
+ const left=fullX+(inset-stroke/2)*fullW/width, right=fullX+(width-inset+stroke/2)*fullW/width;
+ const top=fullY+(inset-stroke/2)*fullBodyH/height,bottom=fullY+(height-inset+stroke/2)*fullBodyH/height;
+ if(left<0||right>=384||top<0||bottom>=maxRows)throw Error('Rahmen liegt außerhalb des Druckrasters – Korrektur reduzieren');
+ return {x:fullX,y:fullY,w:fullW,h:fullBodyH,rows:maxRows}
+}
 function drawGuide(g,unit){if(!$('showGuide').checked)return;const margin=unit;g.save();g.strokeStyle='#e14b59';g.lineWidth=Math.max(.65,unit*.095);g.setLineDash([unit*.32,unit*.32]);if(framePath(g,width*unit,height*unit,margin))g.stroke();g.restore()}
 const FRAME_WORDS={de:{title:'Designrahmen & Kalibrierung',style:'Druckbarer Rahmen',none:'Kein Rahmen',single:'Schlichte Linie',double:'Doppelrahmen',rounded:'Abgerundete Ecken',dashed:'Gestrichelt',dotted:'Gepunktet',corners:'Nur Eckmarkierungen',ornament:'Klassischer Zierrahmen',ticket:'Ticket-Rahmen',inset:'Rahmenabstand (mm)',thick:'Linienstärke (mm)',guide:'1-mm-Hilfsrahmen anzeigen (nicht drucken)',framenote:'Designrahmen werden gedruckt, der rote 1-mm-Hilfsrahmen nicht. Druckposition bitte zuerst auf 40 × 20 mm überprüfen.'},en:{title:'Decorative borders & calibration',style:'Printable border',none:'No border',single:'Simple line',double:'Double border',rounded:'Rounded corners',dashed:'Dashed',dotted:'Dotted',corners:'Corner markers',ornament:'Classic ornament',ticket:'Ticket border',inset:'Border inset (mm)',thick:'Line thickness (mm)',guide:'Show 1-mm guide (not printed)',framenote:'Decorative borders print; red 1-mm guide never prints. Check actual positioning on a 40 × 20 mm label first.'}};
 function translateFrames(){document.querySelectorAll('[data-fr]').forEach(el=>{el.textContent=FRAME_WORDS[lang][el.dataset.fr]||el.textContent})}
+const BORDER_CAL_KEY='bq03-border-calibration-v041';
+const borderCalIds=['borderDx','borderDy','borderDw','borderDh'];
+function borderCal(){return {dx:clamp(+$('borderDx').value||0,-4,4),dy:clamp(+$('borderDy').value||0,-4,4),dw:clamp(+$('borderDw').value||0,-6,6),dh:clamp(+$('borderDh').value||0,-6,6)}}
+function borderCalKey(){return `${width}x${height}`}
+function storedBorderCal(){try{return JSON.parse(localStorage.getItem(BORDER_CAL_KEY)||'{}')}catch{return {}}}
+function loadBorderCal(){const v=storedBorderCal()[borderCalKey()]||{dx:0,dy:0,dw:0,dh:0};for(const [id,key] of [['borderDx','dx'],['borderDy','dy'],['borderDw','dw'],['borderDh','dh']])$(id).value=v[key]||0;showBorderCalStatus()}
+function showBorderCalStatus(){const v=borderCal();$('borderCalStatus').textContent=`${width} × ${height} mm · X ${v.dx} / Y ${v.dy} / Breite ${v.dw} / Höhe ${v.dh} mm · nur Rahmen`}
+function saveBorderCal(){try{const c=storedBorderCal();c[borderCalKey()]=borderCal();localStorage.setItem(BORDER_CAL_KEY,JSON.stringify(c))}catch(e){log('Rahmenkalibrierung: '+e.message)}showBorderCalStatus()}
 function borderSettings(){return {frame:frameConfig(),guide:$('showGuide').checked}}
 function restoreBorderSettings(v){const cfg=v?.frame||{};$('frameStyle').value=FRAME_TYPES.includes(cfg.style)?cfg.style:'none';$('frameInset').value=clamp(Number(cfg.inset)||1,.5,8);$('frameThickness').value=clamp(Number(cfg.thickness)||.25,.15,1.2);$('showGuide').checked=v?.guide!==false}
+for(const id of borderCalIds)$(id).addEventListener('change',()=>{saveBorderCal();draw()});
+$('borderReset').onclick=()=>{borderCalIds.forEach(id=>$(id).value=0);saveBorderCal();draw()};
 for(const id of ['frameStyle','frameInset','frameThickness','showGuide']){const e=$(id);e.addEventListener('focus',()=>remember());e.addEventListener('change',()=>{draw()});}
 
 function draw(){if(!ctx)return;const ratio=10, cw=Math.round(width*ratio),ch=Math.round(height*ratio);canvas.width=cw;canvas.height=ch;const pxPerMm=96/25.4;const fitted=pxPerMm*zoom;$('paperWrap').style.width=`${(width*fitted).toFixed(2)}px`;$('paperWrap').style.height=`${(height*fitted).toFixed(2)}px`;ctx.fillStyle='#fff';ctx.fillRect(0,0,cw,ch);if(gridVisible){ctx.save();ctx.strokeStyle='#dce8fa';ctx.lineWidth=0.7;for(let gx=10;gx<cw;gx+=10){ctx.beginPath();ctx.moveTo(gx,0);ctx.lineTo(gx,ch);ctx.stroke()}for(let gy=10;gy<ch;gy+=10){ctx.beginPath();ctx.moveTo(0,gy);ctx.lineTo(cw,gy);ctx.stroke()}ctx.restore()}
-drawDesignerFrame(ctx,frameConfig(),ratio);
+drawCalibratedFrame(ctx,ratio);
 ctx.save();
 for(const o of objects)drawShape(ctx,o,ratio);
 if($('invert').checked){ctx.save();ctx.globalCompositeOperation='difference';ctx.fillStyle='#fff';ctx.fillRect(0,0,cw,ch);ctx.restore()}
@@ -1376,13 +1406,19 @@ if(geom.clipped)warnings.push(lang==='de'?'Druckraster wurde auf die Etikettenh�
 let clipping=objects.filter(o=>{const sx=o.w*o.scale/100,sy=o.h*o.scale/100;const r=o.rotation*Math.PI/180;const bw=Math.abs(sx*Math.cos(r))+Math.abs(sy*Math.sin(r)),bh=Math.abs(sx*Math.sin(r))+Math.abs(sy*Math.cos(r));return o.x+o.w/2-bw/2<0||o.x+o.w/2+bw/2>width||o.y+o.h/2-bh/2<0||o.y+o.h/2+bh/2>height});
 if(clipping.length)warnings.push(`${clipping.length} ${lang==='de'?'Element(e) außerhalb des Etiketts':'element(s) outside label bounds'}`);
 $('printingWarning').textContent=warnings.join(' · ')||(validated?T[lang].verified:'');
-$('marginInfo').textContent=lang==='de'?`Druckraster: ${contentH} Zeilen, Start bei ${sourceTop} Zeilen. Der physische Rand muss mit einem Probedruck kalibriert werden.`:`Print raster: ${contentH} rows, starts at ${sourceTop}. Physical margins need calibration with a test print.`;
+$('marginInfo').textContent=lang==='de'?`Motiv: ${contentH} Zeilen, Start bei ${sourceTop}. Mit Designrahmen werden zusätzliche Zeilen bis zur nominalen Etikettenhöhe übertragen; physische Position am Probedruck kalibrieren.`:`Print raster: ${contentH} rows, starts at ${sourceTop}. Physical margins need calibration with a test print.`;
 $('formatNote').textContent=`Druckbereich ${targetWidth} Punkte · X=${sourceX} · oberer Rand ${sourceTop} Punkte. ${validated?'✓ Hardwaretest erfolgreich':'Nicht hardwaregetestet'}`;
 $('pixels').textContent=`Raster: 384 × ${heightPixels} px`;
 try{const rows=renderPrint();const n=job(rows,true).length;$('bytes').textContent=`${n.toLocaleString(lang)} Bytes`;$('duration').textContent=`~${(Math.ceil(n/20)*.03).toFixed(1)} s`; $('print').disabled=!device?.gatt?.connected||!$('ack').checked||printing}catch(e){$('bytes').textContent=e.message;$('print').disabled=true}
 }
 function printGeometry(){let preset=$('preset').value,[,,right,top]=PRESETS[preset]||[width,height,2,17],known=preset==='40x20'&&width===40&&height===20;let w=known?311:Math.min(384-right,Math.floor(mmToPx(width)*.99));const y=top+Number($('offsetY').value||0),x=384-right-w+Number($('offsetX').value||0);const physicalRows=Math.max(1,Math.floor(mmToPx(height)));let h=known?120:Math.min(Math.ceil(mmToPx(height)),Math.max(1,physicalRows-Math.max(0,y)-2));const count=Math.ceil(Math.max(0,y)+h);if(count<1||count>640||w<1||x>=384||x+w<=0||y>=640)throw Error('Druckbereich außerhalb der sicheren Grenzen');return {w,h,x,y,count,clipped:!known&&h<Math.ceil(mmToPx(height))}}
-function renderPrint(){const {w,h,x,y,count}=printGeometry();printCanvas.width=384;printCanvas.height=count;printCtx.fillStyle='white';printCtx.fillRect(0,0,384,count);printCtx.save();printCtx.beginPath();printCtx.rect(x,y,w,h);printCtx.clip();printCtx.translate(x,y);printCtx.scale(w/width,h/height);drawDesignerFrame(printCtx,frameConfig(),1);for(const o of objects)drawShape(printCtx,o,1);printCtx.restore();const rgba=printCtx.getImageData(0,0,384,count).data;const rows=bitmapToRows(rgba,384,count,+$('threshold').value);if($('invert').checked){for(let py=Math.max(0,y);py<Math.min(count,y+h);py++)for(let px=Math.max(0,x);px<Math.min(384,x+w);px++)rows[py][px>>3]^=1<<(px&7)}return rows}
+function renderPrint(options={}){const {w,h,x,y,count}=printGeometry();const config=frameConfig(),hasFrame=config.style!=='none',frameGeom=hasFrame?physicalBorderGeometry({w,h,x,y,count}):null;
+const totalRows=frameGeom?Math.max(count,frameGeom.rows):count;
+printCanvas.width=384;printCanvas.height=totalRows;printCtx.fillStyle='white';printCtx.fillRect(0,0,384,totalRows);
+if(hasFrame){printCtx.save();printCtx.translate(frameGeom.x,frameGeom.y);printCtx.scale(frameGeom.w/width,frameGeom.h/height);drawDesignerFrame(printCtx,config,1);printCtx.restore()}
+if(!options.borderOnly){printCtx.save();printCtx.beginPath();printCtx.rect(x,y,w,h);printCtx.clip();printCtx.translate(x,y);printCtx.scale(w/width,h/height);for(const o of objects)drawShape(printCtx,o,1);printCtx.restore()}
+const rgba=printCtx.getImageData(0,0,384,totalRows).data;const rows=bitmapToRows(rgba,384,totalRows,+$('threshold').value);
+if($('invert').checked&&!options.borderOnly){for(let py=Math.max(0,y);py<Math.min(totalRows,y+h);py++)for(let px=Math.max(0,x);px<Math.min(384,x+w);px++)rows[py][px>>3]^=1<<(px&7)}return rows}
 function selectedObj(){return objects.find(v=>v.id===selected)}
 const propertyIds=['elementText','fontFamily','fontSize','textAlign','elementX','elementY','elementW','elementH','elementRotation','elementScale','bold','italic','underline','lineSpacing'];
 function showProperties(){const o=selectedObj();$('propertiesForm').hidden=!o;$('noSelection').hidden=!!o;if(!o)return;const mapping={elementText:o.text,fontFamily:o.font,fontSize:o.fontSize,textAlign:o.align,elementX:o.x,elementY:o.y,elementW:o.w,elementH:o.h,elementRotation:o.rotation,elementScale:o.scale,bold:!!o.bold,italic:!!o.italic,underline:!!o.underline,lineSpacing:o.lineSpacing||1.2};for(const [k,v] of Object.entries(mapping))$(k).type==='checkbox'?$(k).checked=!!v:$(k).value=v;$('elementText').disabled=o.type==='image';for(const id of ['fontFamily','fontSize','textAlign','bold','italic','underline','lineSpacing'])$(id).disabled=o.type!=='text'}
@@ -1464,13 +1500,18 @@ $('historyRestore').onclick=()=>{const item=getHistory()[+$('historyList').value
 $('historyClear').onclick=()=>{if(confirm(lang==='de'?'Druckverlauf löschen?':'Clear print history?')){localStorage.removeItem(HISTORY_KEY);refreshHistory()}};
 function serialText(s,n){return s.replace(/\{(n+)\}/g,(_,digits)=>String(n).padStart(digits.length,'0'))}
 // Prepare and verify a complete print job before transmitting any bytes.
-function preparedJob(serialNumber){const orig=objects;try{objects=orig.map(o=>({...o,text:serialText(String(o.text||''),serialNumber)}));const rows=renderPrint();return {rows,bytes:job(rows,true)}}finally{objects=orig}}
+function preparedJob(serialNumber){const orig=objects;try{objects=orig.map(o=>({...o,text:serialText(String(o.text||''),serialNumber)}));const rows=renderPrint({borderOnly:borderOnlyNext});return {rows,bytes:job(rows,true)}}finally{objects=orig}}
+$('borderTest').onclick=()=>{if(printing)return;if(frameConfig().style==='none'){alert('Bitte zuerst einen druckbaren Rahmen auswählen.');return}if(!device?.gatt?.connected){alert('Zuerst den BQ03 verbinden.');return}
+if(!$('ack').checked){alert('Bitte zuerst die Druckbestätigung aktivieren.');return}
+// Reuse the original print path with a one-shot border-only flag (no text/images).
+borderOnlyNext=true;$('copies').value=1;$('print').click();};
+let borderOnlyNext=false;
 // Printing uses the unchanged original status, chunk sizing, GATT write and delay sequence.
 $('print').onclick=async()=>{if(printing||!$('ack').checked)return;
 const copies=Number($('copies').value),start=Number($('serialStart').value);
 if(!Number.isInteger(copies)||copies<1||copies>30||!Number.isSafeInteger(start)||start<0||start>999999)return alert(lang==='de'?'Ungültige Kopienzahl oder Seriennummer.':'Invalid copies or serial number.');
-const plans=[];try{for(let i=0;i<copies;i++)plans.push(preparedJob(start+i))}catch(e){log('Auftrag ungültig: '+e.message);alert(e.message);return}
-if(!confirm(`${width} × ${height} mm · ${copies} ${lang==='de'?'Etikett(e) drucken?':'labels to print?'}\n${$('preset').value==='40x20'?T[lang].verified:T[lang].unverified}`))return;
+const plans=[];try{for(let i=0;i<copies;i++)plans.push(preparedJob(start+i))}catch(e){log('Auftrag ungültig: '+e.message);alert(e.message);borderOnlyNext=false;return}finally{borderOnlyNext=false}
+if(!confirm(`${width} × ${height} mm · ${copies} ${lang==='de'?'Etikett(e) drucken?':'labels to print?'}\n${$('preset').value==='40x20'?T[lang].verified:T[lang].unverified}`)){borderOnlyNext=false;return;}
 printing=true;abort=false;ready=false;updateConnection();let done=0;const layout=readLayout();
 try{for(const {rows,bytes} of plans){if(abort)throw Error('Abbruch');ready=false;await send(C.status());for(let i=0;i<25&&!ready&&!abort;i++)await sleep(100);if(abort||!ready)throw Error('Kein bestätigter Bereitschaftsstatus');log(`Sende ${bytes.length} Byte, ${rows.length} Zeilen (${done+1}/${copies})`);for(let i=0;i<bytes.length;i+=20){if(abort||!device?.gatt?.connected)throw Error('Abbruch / Verbindung getrennt');await send(bytes.slice(i,i+20));await sleep(30)}done++;log('Druckdaten übertragen '+done+'/'+copies);if(done<copies){await sleep(500);await send(C.align());await sleep(1000)}}if(done)appendHistory(layout,done)}catch(err){log('Druck abgebrochen: '+err.message);if(done)appendHistory(layout,done);if(abort)await disconnect()}finally{printing=false;updateConnection()}};
 // Image imports: rasterize safe SVG files via decoded image; disallow active content.
@@ -1478,5 +1519,5 @@ $('imageFile').addEventListener('change',async e=>{const f=e.target.files?.[0];i
 // Ensure snapshots taken for preset/other state changes and form fields.
 buttonsState();refreshHistory();localTranslate();
 
-objects=[textObj('Mein BQ03\nTestetikett')];selected=objects[0].id;showProperties();refreshTemplates();translate();
+objects=[textObj('Mein BQ03\nTestetikett')];selected=objects[0].id;showProperties();refreshTemplates();loadBorderCal();translate();
 </script></body></html>
