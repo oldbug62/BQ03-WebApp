@@ -1,4 +1,4 @@
-# BQ03 Studio – Web Beta 0.2
+![BQ03 Studio Web](banner.png)
 
 Die Web-App für den **BQ03** mit BLE V5G (AE30/AE01/AE02). Weiterentwicklung der beim Benutzer erfolgreich gedruckten Web-Beta 0.1. Die Anwendung basiert auf den vorhandenen eigenen Hardwareprotokollen, nicht auf einer AH-M2-Protokollannahme.
 
