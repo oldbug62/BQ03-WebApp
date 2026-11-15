@@ -3,7 +3,7 @@
 
 .editor-tools{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}.editor-tools button{flex:1;min-width:75px}.editor-tools .active{background:#4a69a2}.compact{font-size:12px}.choice{display:flex;gap:8px;align-items:center}.choice input{width:auto}.calibration-note{border-left:3px solid #91b8ff;padding:6px 9px;background:#23334d}.badge-small{font-size:11px;border:1px solid #506783;border-radius:8px;padding:4px}.paper-wrap.show-grid{background-image:linear-gradient(#9993 1px,transparent 1px),linear-gradient(90deg,#9993 1px,transparent 1px);background-size:20px 20px}
 </style></head><body>
-<header><div><div class="brand">▣ BQ03 Studio <span style="color:#8da7ff">0.4.8</span></div><div class="muted" data-i18n="subtitle">Etiketteneditor · Direkt per Bluetooth · Keine Cloud</div></div><div style="display:flex;gap:10px;align-items:center"><select id="lang" style="width:auto"><option value="de">Deutsch</option><option value="en">English</option></select><span id="connection" class="pill">● Nicht verbunden</span></div></header>
+<header><div><div class="brand">▣ BQ03 Studio <span style="color:#8da7ff">0.4.9</span></div><div class="muted" data-i18n="subtitle">Etiketteneditor · Direkt per Bluetooth · Keine Cloud</div></div><div style="display:flex;gap:10px;align-items:center"><select id="lang" style="width:auto"><option value="de">Deutsch</option><option value="en">English</option></select><span id="connection" class="pill">● Nicht verbunden</span></div></header>
 <main><section>
 <div class="panel"><h2 data-i18n="connectionTitle">01 · Druckerverbindung</h2><div class="buttons"><button id="connect" class="primary" data-i18n="connect">Bluetooth verbinden</button><button id="disconnect" data-i18n="disconnect">Trennen</button></div><div class="buttons"><button id="status" data-i18n="status">Status abfragen</button><button id="align" data-i18n="position">Etikett positionieren</button></div><p class="hint">BQ03 · BLE AE30 / AE01 / AE02 · Chrome/Edge · HTTPS</p></div>
 <div class="panel"><h2 data-i18n="paperTitle">02 · Papierformat</h2><label data-i18n="format">Etikettenformat</label><select id="preset"><option value="40x20">40 × 20 mm ✓</option><option value="50x50">50 × 50 mm</option><option value="30x15">30 × 15 mm</option><option value="25x25">25 × 25 mm</option><option value="20x10">20 × 10 mm</option><option value="custom" data-i18n="custom">Benutzerdefiniert</option></select><div class="two"><div><label data-i18n="width">Breite (mm)</label><input type="number" id="widthmm" value="40" min="10" max="50" step="0.5"></div><div><label data-i18n="height">Höhe (mm)</label><input type="number" id="heightmm" value="20" min="5" max="70" step="0.5"></div></div><label class="choice"><input type="checkbox" id="calibrationOn" checked> <span data-new="calibration">Kalibrierung pro Format aktiv</span></label><div class="two"><div><label data-i18n="offsetX">Druckversatz X (Punkte)</label><input type="number" id="offsetX" value="0" min="-40" max="40"></div><div><label data-i18n="offsetY">Druckversatz Y (Punkte)</label><input type="number" id="offsetY" value="0" min="-40" max="40"></div></div><p id="formatNote" class="hint"></p><p class="hint calibration-note" data-new="calInfo">Druckversätze werden pro Papierformat gespeichert. Die 40×20-mm-Standardeinstellung bleibt 0/0.</p></div>
@@ -1455,6 +1455,71 @@ for(const id of borderCalIds)$(id).addEventListener('change',()=>{saveBorderCal(
 $('borderReset').onclick=()=>{const d=defaultBorderCal();$('borderDx').value=d.dx;$('borderDy').value=d.dy;$('borderDw').value=d.dw;$('borderDh').value=d.dh;saveBorderCal();draw()};
 for(const id of ['frameStyle','frameInset','frameThickness','showGuide']){const e=$(id);e.addEventListener('focus',()=>remember());e.addEventListener('change',()=>{draw()});}
 
+// Selection and bounds use visible, PRINTABLE ink, not the oversized editing box.
+// We render the same shape routine without rotation onto a white scratch bitmap.
+// Pixel positions are then rotated/scaled exactly as in drawShape().
+// Nothing here changes renderPrint(), raster packing, or Bluetooth.
+const inkBoundsCache = new WeakMap();
+const inkScratch = document.createElement('canvas');
+const inkScratchCtx = inkScratch.getContext('2d', {willReadFrequently:true});
+function visibleInkBounds(o){
+ const unit=8, threshold=Number($('threshold').value)||128;
+ const loaded=imageCache.get(o.id);
+ const sig=JSON.stringify([o.type,o.text,o.w,o.h,o.rotation,o.scale,o.font,o.fontSize,o.align,
+  o.bold,o.italic,o.underline,o.lineSpacing,o.image?.length||0,loaded?.naturalWidth||0,
+  loaded?.naturalHeight||0,threshold]);
+ const prior=inkBoundsCache.get(o);
+ if(prior?.sig===sig)return prior.bounds;
+ const W=Math.max(1,Math.ceil(o.w*unit)+4),H=Math.max(1,Math.ceil(o.h*unit)+4);
+ inkScratch.width=W;inkScratch.height=H;
+ const g=inkScratchCtx;
+ g.fillStyle='#fff';g.fillRect(0,0,W,H);
+ // Move the element center to the scratch-canvas center, then rasterize at 0°/100%.
+ g.save();
+ g.translate(W/2-(o.x+o.w/2)*unit,H/2-(o.y+o.h/2)*unit);
+ drawShape(g,{...o,rotation:0,scale:100},unit);
+ g.restore();
+ const data=g.getImageData(0,0,W,H).data;
+ const angle=(o.rotation||0)*Math.PI/180,c=Math.cos(angle),si=Math.sin(angle),scale=(o.scale||100)/100;
+ let lx0=Infinity,ly0=Infinity,lx1=-Infinity,ly1=-Infinity;
+ let rx0=Infinity,ry0=Infinity,rx1=-Infinity,ry1=-Infinity;
+ let dark=0;
+ for(let y=0;y<H;y++)for(let x=0;x<W;x++){
+  const j=(y*W+x)*4,a=data[j+3]/255;
+  const light=(.299*data[j]+.587*data[j+1]+.114*data[j+2])*a+255*(1-a);
+  if(light>=threshold)continue;
+  const xx=(x+.5-W/2)/unit,yy=(y+.5-H/2)/unit;
+  lx0=Math.min(lx0,xx);lx1=Math.max(lx1,xx);
+  ly0=Math.min(ly0,yy);ly1=Math.max(ly1,yy);
+  const rx=(xx*c-yy*si)*scale,ry=(xx*si+yy*c)*scale;
+  rx0=Math.min(rx0,rx);rx1=Math.max(rx1,rx);
+  ry0=Math.min(ry0,ry);ry1=Math.max(ry1,ry);
+  dark++;
+ }
+ const bounds=dark?{local:[lx0,ly0,lx1,ly1],rotated:[rx0,ry0,rx1,ry1]}:null;
+ inkBoundsCache.set(o,{sig,bounds});return bounds;
+}
+function visibleInkOutsideLabel(o){
+ const bounds=visibleInkBounds(o);if(!bounds)return false;
+ const cx=o.x+o.w/2,cy=o.y+o.h/2,[x0,y0,x1,y1]=bounds.rotated;
+ // 0.15 mm tolerance accounts for raster sampling, not the empty editing box.
+ const tolerance=.15;
+ return cx+x0< -tolerance||cy+y0< -tolerance||cx+x1>width+tolerance||cy+y1>height+tolerance;
+}
+function drawInkSelection(g,o,unit){
+ const b=visibleInkBounds(o),margin=.3;
+ g.save();g.translate((o.x+o.w/2)*unit,(o.y+o.h/2)*unit);
+ g.rotate(o.rotation*Math.PI/180);g.scale(o.scale/100,o.scale/100);
+ g.strokeStyle='#456cf7';g.lineWidth=1.5/Math.max(.1,o.scale/100);
+ g.setLineDash([5,3]);
+ if(b){const [x0,y0,x1,y1]=b.local;
+  g.strokeRect((x0-margin)*unit,(y0-margin)*unit,(x1-x0+2*margin)*unit,(y1-y0+2*margin)*unit);
+ }else{
+  // Empty text or an image still loading remains selectable.
+  g.strokeRect(-o.w*unit/2,-o.h*unit/2,o.w*unit,o.h*unit);
+ }
+ g.restore();
+}
 function draw(){
  if(!ctx)return;
  const ratio=10,cw=Math.round(width*ratio),ch=Math.round(height*ratio);
@@ -1469,7 +1534,7 @@ function draw(){
   for(let gx=10;gx<cw;gx+=10){ctx.beginPath();ctx.moveTo(gx,0);ctx.lineTo(gx,ch);ctx.stroke()}
   for(let gy=10;gy<ch;gy+=10){ctx.beginPath();ctx.moveTo(0,gy);ctx.lineTo(cw,gy);ctx.stroke()}
   ctx.restore()}
- if(selected){const o=objects.find(v=>v.id===selected);if(o){ctx.save();ctx.translate((o.x+o.w/2)*ratio,(o.y+o.h/2)*ratio);ctx.rotate(o.rotation*Math.PI/180);ctx.scale(o.scale/100,o.scale/100);ctx.strokeStyle='#456cf7';ctx.lineWidth=2;ctx.setLineDash([5,3]);ctx.strokeRect(-o.w*ratio/2,-o.h*ratio/2,o.w*ratio,o.h*ratio);ctx.restore()}}
+ if(selected){const o=objects.find(v=>v.id===selected);if(o)drawInkSelection(ctx,o,ratio)}
 drawGuide(ctx,ratio);
 $('labelMeasurements').textContent=`${width} × ${height} mm · 100 % ≈ Originalgröße (Monitorabhängig)`;
 const configured=$('preset').value;const validated=configured==='40x20'&&width===40&&height===20&&Number($('offsetX').value)===0&&Number($('offsetY').value)===0;
@@ -1477,7 +1542,7 @@ const geom=printGeometry();const {w:targetWidth,x:sourceX,y:sourceTop,h:contentH
 const warnings=[];if(!validated)warnings.push(T[lang].unverified);
 if(width===50)warnings.push(lang==='de'?'50 mm: Das Motiv wird auf die Druckkopfbreite begrenzt.':'50 mm: Image restricted to printhead width.');
 if(geom.clipped)warnings.push(lang==='de'?'Druckraster wurde auf die Etikettenhöhe begrenzt; Rahmenposition am echten Etikett testen.':'Print raster capped at label height; verify border positioning on a real label.');
-let clipping=objects.filter(o=>{const sx=o.w*o.scale/100,sy=o.h*o.scale/100;const r=o.rotation*Math.PI/180;const bw=Math.abs(sx*Math.cos(r))+Math.abs(sy*Math.sin(r)),bh=Math.abs(sx*Math.sin(r))+Math.abs(sy*Math.cos(r));return o.x+o.w/2-bw/2<0||o.x+o.w/2+bw/2>width||o.y+o.h/2-bh/2<0||o.y+o.h/2+bh/2>height});
+const clipping=objects.filter(visibleInkOutsideLabel);
 if(clipping.length)warnings.push(`${clipping.length} ${lang==='de'?'Element(e) außerhalb des Etiketts':'element(s) outside label bounds'}`);
 $('printingWarning').textContent=warnings.join(' · ')||(validated?T[lang].verified:'');
 $('marginInfo').textContent=lang==='de'?`Vorschau und Druck werden aus genau derselben Etikettenzeichnung erstellt. Die Raster-Vorschau zeigt die wirklich gesendeten Pixel. Physische Etikettenkanten im Testdruck prüfen.`:`Editor and print use one shared label drawing. The raster preview displays the actual transmitted pixels. Verify physical paper margins by test print.`;
