@@ -25,6 +25,8 @@
 
 **BQ03 Studio Web** ist ein unabhängiger, browserbasierter Etiketteneditor für den **BQ03-Thermodrucker**. Etiketten lassen sich erstellen, bearbeiten und direkt über **Web Bluetooth** an den Drucker senden – ohne zusätzliche Drucker-App und ohne Cloud-Anmeldung.
 
+**Gerätemarke (laut Produktangebot): heuchaey · Modell: BQ03.** BQ03 Studio Web ist ein unabhängiges Community-Projekt und steht nicht in offizieller Verbindung zur Marke oder zum Hersteller.
+
 ### 🚀 Schnellstart
 
 1. **[Web-App öffnen](https://oldbug62.github.io/BQ03-WebApp/)** – in einer aktuellen Version von **Chrome oder Edge**.
@@ -75,6 +77,8 @@ Aktuelle dokumentierte Version: **0.4.9**. Die Bluetooth-Verbindung und der Druc
 ## 🇬🇧 English
 
 **BQ03 Studio Web** is an independent, browser-based label editor for the **BQ03 thermal printer**. Create and edit labels, then send them directly to the printer using **Web Bluetooth** — no separate printer application or cloud sign-in required.
+
+**Device brand (as listed by the seller): heuchaey · Model: BQ03.** BQ03 Studio Web is an independent community project and is not officially affiliated with the brand or device manufacturer.
 
 ### 🚀 Quick start
 
