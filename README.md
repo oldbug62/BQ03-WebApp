@@ -126,6 +126,14 @@ Latest documented version: **0.4.9**. Bluetooth and **40 × 20 mm** printing hav
 
 ---
 
+## 📄 Lizenz / License
+
+**Deutsch:** BQ03 Studio Web wird unter der [MIT-Lizenz](LICENSE) veröffentlicht. Hinweise auf enthaltene Drittanbieter-Komponenten stehen in [LICENSE-THIRD-PARTY.txt](LICENSE-THIRD-PARTY.txt). Deren eigene Lizenzbedingungen bleiben gültig.
+
+**English:** BQ03 Studio Web is released under the [MIT License](LICENSE). Notices for included third-party components are in [LICENSE-THIRD-PARTY.txt](LICENSE-THIRD-PARTY.txt). Their respective license terms continue to apply.
+
+---
+
 <p align="center">
   <a href="https://oldbug62.github.io/BQ03-WebApp/"><strong>▶ BQ03 Studio Web öffnen / Open BQ03 Studio Web</strong></a>
 </p>
